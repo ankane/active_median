@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["acekane1@gmail.com"]
   spec.description   = %q{Median for ActiveRecord}
   spec.summary       = %q{Median for ActiveRecord}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/ankane/active_median"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
