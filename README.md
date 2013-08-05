@@ -2,7 +2,7 @@
 
 Median for ActiveRecord
 
-**PostgreSQL only**
+**PostgreSQL only at the moment**
 
 ## Usage
 
