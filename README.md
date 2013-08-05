@@ -1,10 +1,6 @@
 # ActiveMedian
 
-Median for ActiveRecord
-
-**PostgreSQL only at the moment**
-
-## Usage
+Median for ActiveRecord - PostgreSQL only at the moment
 
 ```ruby
 Item.median(:price)
