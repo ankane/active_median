@@ -70,7 +70,7 @@ end
 module Arel
   module Visitors
     class ToSql
-      def visit_Arel_Nodes_Median o
+      def visit_Arel_Nodes_Median o, a=nil
         "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
           visit x }.join(', ')})#{o.alias ? " AS #{visit o.alias}" : ''}"
       end
