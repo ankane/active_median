@@ -49,7 +49,7 @@ end
 
 module ActiveRecord
   module Querying
-    delegate :median, :to => :scoped
+    delegate :median, :to => (Gem::Version.new(Arel::VERSION) >= Gem::Version.new("4.0.1") ? :all : :scoped)
   end
 end
 
@@ -71,8 +71,13 @@ module Arel
   module Visitors
     class ToSql
       def visit_Arel_Nodes_Median o, a=nil
-        "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
+        if a
+          "AVG(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
+          visit x, a }.join(', ')})#{o.alias ? " AS #{visit o.alias, a}" : ''}"
+        else
+          "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
           visit x }.join(', ')})#{o.alias ? " AS #{visit o.alias}" : ''}"
+        end
       end
     end
   end
