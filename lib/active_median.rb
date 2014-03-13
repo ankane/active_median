@@ -35,6 +35,21 @@ module ActiveMedian
         FINALFUNC=array_median
       );
     SQL
+    ActiveRecord::Base.connection.execute <<-SQL
+      CREATE OR REPLACE FUNCTION array_median(double precision[])
+        RETURNS double precision AS
+      $$
+        SELECT array_median($1::numeric[])::double precision;
+      $$
+        LANGUAGE SQL;
+
+      DROP AGGREGATE IF EXISTS median(double precision);
+      CREATE AGGREGATE median(double precision) (
+        SFUNC=array_append,
+        STYPE=double precision[],
+        FINALFUNC=array_median
+      );
+    SQL
     true
   end
 end
