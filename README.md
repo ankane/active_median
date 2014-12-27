@@ -2,6 +2,8 @@
 
 Median for ActiveRecord - PostgreSQL only at the moment
 
+[![Build Status](https://travis-ci.org/ankane/active_median.svg)](https://travis-ci.org/ankane/active_median)
+
 ```ruby
 Item.median(:price)
 ```
