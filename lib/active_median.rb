@@ -79,7 +79,7 @@ module Arel
         if Gem::Version.new(Arel::VERSION) >= Gem::Version.new("6.0.0")
           aggregate "MEDIAN", o, a
         elsif a
-          "AVG(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
+          "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
           visit x, a }.join(', ')})#{o.alias ? " AS #{visit o.alias, a}" : ''}"
         else
           "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
