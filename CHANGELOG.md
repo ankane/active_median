@@ -1,3 +1,7 @@
+## 0.1.2 [unreleased]
+
+- Added support for ActiveRecord 4.2
+
 ## 0.1.1
 
 - 10x faster median
