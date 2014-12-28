@@ -13,8 +13,8 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_odd
-    [1, 1, 2.5, 4, 100].each {|n| User.create!(visits_count: n) }
-    assert_equal 2.5, User.median(:visits_count)
+    [1, 1, 2, 4, 100].each {|n| User.create!(visits_count: n) }
+    assert_equal 2, User.median(:visits_count)
   end
 
   def test_empty
