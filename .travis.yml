@@ -10,9 +10,11 @@ notifications:
     on_failure: change
 gemfile:
   - Gemfile
-  - gemfiles/activerecord41.gemfile
-  - gemfiles/activerecord40.gemfile
-  - gemfiles/activerecord32.gemfile
+  - test/gemfiles/activerecord50.gemfile
+  - test/gemfiles/activerecord41.gemfile
+  - test/gemfiles/activerecord40.gemfile
+  - test/gemfiles/activerecord32.gemfile
 matrix:
   allow_failures:
-    - gemfile: gemfiles/activerecord32.gemfile
+    - gemfile: test/gemfiles/activerecord50.gemfile
+    - gemfile: test/gemfiles/activerecord32.gemfile

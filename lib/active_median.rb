@@ -46,8 +46,8 @@ end
 
 module ActiveRecord
   module Calculations
-    def median(column_name, options = {})
-      calculate(:median, column_name, options)
+    def median(*args)
+      calculate(:median, *args)
     end
   end
 end
