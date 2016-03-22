@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Added support for ActiveRecord 5.0
+
 ## 0.1.2
 
 - Added support for ActiveRecord 4.2
