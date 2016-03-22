@@ -1,8 +1,10 @@
 language: ruby
 rvm:
-  - 2.1
+  - 2.2
+sudo: false
 script: bundle exec rake test
 before_script:
+  - gem install bundler
   - psql -c 'create database active_median_test;' -U postgres
 notifications:
   email:
