@@ -1,3 +1,7 @@
+## 0.1.4 [unreleased]
+
+- Added `drop_function` method
+
 ## 0.1.3
 
 - Added support for ActiveRecord 5.0

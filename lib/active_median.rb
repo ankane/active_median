@@ -42,6 +42,14 @@ module ActiveMedian
     SQL
     true
   end
+
+  def self.drop_function
+    ActiveRecord::Base.connection.execute <<-SQL
+      DROP AGGREGATE IF EXISTS median(anyelement);
+      DROP FUNCTION IF EXISTS median(anyarray);
+    SQL
+    true
+  end
 end
 
 module ActiveRecord

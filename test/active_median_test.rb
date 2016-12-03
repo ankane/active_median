@@ -1,7 +1,6 @@
 require_relative "test_helper"
 
 class TestActiveMedian < Minitest::Test
-
   def setup
     ActiveMedian.create_function
     User.delete_all
@@ -31,4 +30,9 @@ class TestActiveMedian < Minitest::Test
     assert_equal 0.25, User.median(:rating)
   end
 
+  def test_drop
+    ActiveMedian.drop_function
+    error = assert_raises(ActiveRecord::StatementInvalid) { User.median(:visits_count) }
+    assert_includes error.message, "PG::UndefinedFunction"
+  end
 end

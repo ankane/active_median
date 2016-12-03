@@ -22,10 +22,22 @@ Add this line to your application’s Gemfile:
 gem 'active_median'
 ```
 
-And add the `median` function to the database from the Rails console.
+And create a migrate to add the `median` function to the database.
+
+```sh
+rails g migration create_median_function
+```
+
+with:
 
 ```ruby
-ActiveMedian.create_function
+def up
+  ActiveMedian.create_function
+end
+
+def down
+  ActiveMedian.drop_function
+end
 ```
 
 ## Contributing
