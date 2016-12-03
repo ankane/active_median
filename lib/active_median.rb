@@ -62,7 +62,7 @@ end
 
 module ActiveRecord
   module Querying
-    delegate :median, :to => (Gem::Version.new(Arel::VERSION) >= Gem::Version.new("4.0.1") ? :all : :scoped)
+    delegate :median, to: (Gem::Version.new(Arel::VERSION) >= Gem::Version.new("4.0.1") ? :all : :scoped)
   end
 end
 
@@ -75,7 +75,7 @@ end
 module Arel
   module Expressions
     def median
-      Nodes::Median.new [self], Nodes::SqlLiteral.new('median_id')
+      Nodes::Median.new [self], Nodes::SqlLiteral.new("median_id")
     end
   end
 end
@@ -83,15 +83,17 @@ end
 module Arel
   module Visitors
     class ToSql
-      def visit_Arel_Nodes_Median o, a=nil
+      def visit_Arel_Nodes_Median(o, a = nil)
         if Gem::Version.new(Arel::VERSION) >= Gem::Version.new("6.0.0")
           aggregate "MEDIAN", o, a
         elsif a
-          "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
-          visit x, a }.join(', ')})#{o.alias ? " AS #{visit o.alias, a}" : ''}"
+          "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map do |x|
+            visit x, a
+          end.join(', ')})#{o.alias ? " AS #{visit o.alias, a}" : ''}"
         else
-          "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map { |x|
-          visit x }.join(', ')})#{o.alias ? " AS #{visit o.alias}" : ''}"
+          "MEDIAN(#{o.distinct ? 'DISTINCT ' : ''}#{o.expressions.map do |x|
+            visit x
+          end.join(', ')})#{o.alias ? " AS #{visit o.alias}" : ''}"
         end
       end
     end

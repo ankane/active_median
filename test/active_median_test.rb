@@ -7,12 +7,12 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_even
-    [1, 1, 2, 3, 4, 100].each {|n| User.create!(visits_count: n) }
+    [1, 1, 2, 3, 4, 100].each { |n| User.create!(visits_count: n) }
     assert_equal 2.5, User.median(:visits_count)
   end
 
   def test_odd
-    [1, 1, 2, 4, 100].each {|n| User.create!(visits_count: n) }
+    [1, 1, 2, 4, 100].each { |n| User.create!(visits_count: n) }
     assert_equal 2, User.median(:visits_count)
   end
 
@@ -21,12 +21,12 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_decimal
-    6.times {|n| User.create!(latitude: n * 0.1) }
+    6.times { |n| User.create!(latitude: n * 0.1) }
     assert_equal 0.25, User.median(:latitude)
   end
 
   def test_float
-    6.times {|n| User.create!(rating: n * 0.1) }
+    6.times { |n| User.create!(rating: n * 0.1) }
     assert_equal 0.25, User.median(:rating)
   end
 
