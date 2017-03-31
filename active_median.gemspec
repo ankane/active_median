@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "active_median"
   spec.version       = ActiveMedian::VERSION
   spec.authors       = ["Andrew Kane"]
-  spec.email         = ["acekane1@gmail.com"]
+  spec.email         = ["andrew@chartkick.com"]
   spec.description   = "Median for ActiveRecord"
   spec.summary       = "Median for ActiveRecord"
   spec.homepage      = "https://github.com/ankane/active_median"
@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activerecord"
 
-  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "pg"
