@@ -40,6 +40,20 @@ def down
 end
 ```
 
+Rails can’t store functions in `schema.rb`, so add to your `Rakefile`:
+
+```ruby
+Rake::Task["db:schema:load"].enhance do
+  ActiveMedian.create_function
+end
+```
+
+Or change the dump format to `sql` in `config/application.rb`:
+
+```ruby
+config.active_record.schema_format = :sql
+```
+
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
