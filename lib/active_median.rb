@@ -5,7 +5,7 @@ require "active_median/version"
 module ActiveMedian
   def self.create_function
     # create median method
-    # http://wiki.postgresql.org/wiki/Aggregate_Median
+    # https://wiki.postgresql.org/wiki/Aggregate_Median
     ActiveRecord::Base.connection.execute <<-SQL
       CREATE OR REPLACE FUNCTION median(anyarray)
          RETURNS float8 AS
