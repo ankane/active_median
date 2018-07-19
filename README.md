@@ -2,7 +2,7 @@
 
 Median for ActiveRecord
 
-PostgreSQL only, as MySQL only supports [aggregate user-defined functions](https://dev.mysql.com/doc/refman/8.0/en/adding-udf.html) in C and C++, and SQLite doesn’t support them
+PostgreSQL only, as MySQL only supports [aggregate user-defined functions](https://dev.mysql.com/doc/refman/8.0/en/adding-udf.html) in C and C++, and SQLite only supports them in C
 
 [![Build Status](https://travis-ci.org/ankane/active_median.svg)](https://travis-ci.org/ankane/active_median)
 
