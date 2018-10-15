@@ -26,7 +26,7 @@ class TestActiveMedian < Minitest::Test
 
   def test_float
     6.times { |n| User.create!(rating: n * 0.1) }
-    assert_equal 0.25, User.median(:rating)
+    assert_in_delta 0.25, User.median(:rating)
   end
 
   def test_group

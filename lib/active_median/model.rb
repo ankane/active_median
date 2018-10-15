@@ -2,7 +2,19 @@ module ActiveMedian
   module Model
     def median(column)
       group_values = all.group_values
-      result = connection.select_all(select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column})").to_sql)
+
+      relation =
+        if connection.adapter_name =~ /mysql/i
+          if group_values.any?
+            over = "PARTITION BY #{group_values.join(", ")}"
+          end
+
+          select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+        else
+          select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column})")
+        end
+
+      result = connection.select_all(relation.to_sql)
 
       # typecast
       rows = []
@@ -15,7 +27,7 @@ module ActiveMedian
       if group_values.any?
         Hash[rows.map { |r| [r.size == 2 ? r[0] : r[0..-2], r[-1]] }]
       else
-        rows[0][0]
+        rows[0] && rows[0][0]
       end
     end
   end
