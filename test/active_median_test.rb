@@ -56,7 +56,9 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_groupdate
-    assert_equal 2, User.group_by_day(:created_at, last: 2).median(:visits_count).size
+    User.create!(visits_count: 5)
+    result = User.group_by_day(:created_at, last: 2).median(:visits_count)
+    assert_equal [nil, 5], result.values
   end
 
   def test_array_even

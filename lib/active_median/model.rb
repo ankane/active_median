@@ -34,10 +34,7 @@ module ActiveMedian
           rows[0] && rows[0][0]
         end
 
-      # groupdate private api
-      if relation.try(:groupdate_values)
-        result = Groupdate::Magic::Relation.process_result(relation, result)
-      end
+      result = Groupdate.process_result(relation, result) if defined?(Groupdate.process_result)
 
       result
     end
