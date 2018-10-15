@@ -1,7 +1,9 @@
 language: ruby
 rvm:
-  - 2.4.1
+  - 2.5.1
 sudo: false
+addons:
+  postgresql: "9.4"
 script: bundle exec rake test
 before_script:
   - gem install bundler
