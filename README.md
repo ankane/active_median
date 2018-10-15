@@ -17,7 +17,7 @@ Item.median(:price)
 Works with grouping, too.
 
 ```ruby
-Order.group("date_trunc('week', created_at)").median(:total)
+Order.group(:store_id).median(:total)
 ```
 
 Be sure to [sanitize user input](https://rails-sqli.org/) like you must with other aggregate methods like `sum`.
