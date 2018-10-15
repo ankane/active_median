@@ -17,5 +17,14 @@ ActiveRecord::Migration.create_table :users, force: true do |t|
   t.string :name
 end
 
+ActiveRecord::Migration.create_table :posts, force: true do |t|
+  t.references :user
+  t.integer :comments_count
+end
+
 class User < ActiveRecord::Base
+  has_many :posts
+end
+
+class Post < ActiveRecord::Base
 end

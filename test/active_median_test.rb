@@ -46,4 +46,10 @@ class TestActiveMedian < Minitest::Test
     expected = {["A", 1] => 2, ["B", 2] => 5}
     assert_equal expected, User.group(:name).group(:visits_count).median(:rating)
   end
+
+  def test_association
+    user = User.create!
+    user.posts.create!(comments_count: 1)
+    assert_equal 1, user.posts.median(:comments_count)
+  end
 end
