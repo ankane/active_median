@@ -24,4 +24,4 @@ matrix:
       env: ADAPTER=mysql2
       rvm: 2.5.1
       addons:
-        mariadb: "10.2"
+        mariadb: "10.3"

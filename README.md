@@ -2,7 +2,7 @@
 
 Median for ActiveRecord
 
-Supports PostgreSQL 9.4+ and MariaDB 10.2+
+Supports PostgreSQL 9.4+ and MariaDB 10.3.3+
 
 [![Build Status](https://travis-ci.org/ankane/active_median.svg)](https://travis-ci.org/ankane/active_median)
 
