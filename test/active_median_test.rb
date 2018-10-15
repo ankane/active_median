@@ -2,7 +2,6 @@ require_relative "test_helper"
 
 class TestActiveMedian < Minitest::Test
   def setup
-    ActiveMedian.create_function
     User.delete_all
   end
 
@@ -36,15 +35,15 @@ class TestActiveMedian < Minitest::Test
     assert_equal expected, User.group(:name).median(:visits_count)
   end
 
+  def test_complex_group
+    [1, 2, 3, 4, 5, 6].each { |n| User.create!(visits_count: n, name: n < 4 ? "A" : "B") }
+    expected = {"AC" => 2, "BC" => 5}
+    assert_equal expected, User.group("CONCAT(name, 'C')").median(:visits_count)
+  end
+
   def test_double_group
     [1, 2, 3, 4, 5, 6].each { |n| User.create!(rating: n, name: n < 4 ? "A" : "B", visits_count: n < 4 ? 1 : 2) }
     expected = {["A", 1] => 2, ["B", 2] => 5}
     assert_equal expected, User.group(:name).group(:visits_count).median(:rating)
-  end
-
-  def test_drop
-    ActiveMedian.drop_function
-    error = assert_raises(ActiveRecord::StatementInvalid) { User.median(:visits_count) }
-    assert_includes error.message, "PG::UndefinedFunction"
   end
 end

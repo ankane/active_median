@@ -2,7 +2,7 @@
 
 Median for ActiveRecord
 
-PostgreSQL only, as MySQL only supports [aggregate user-defined functions](https://dev.mysql.com/doc/refman/8.0/en/adding-udf.html) in C and C++, and SQLite only supports them in C
+Supports PostgreSQL 9.4+ and MariaDB 10.2+
 
 [![Build Status](https://travis-ci.org/ankane/active_median.svg)](https://travis-ci.org/ankane/active_median)
 
@@ -26,37 +26,11 @@ Add this line to your application’s Gemfile:
 gem 'active_median'
 ```
 
-And create a migration to add the `median` function to the database.
+## Upgrading
 
-```sh
-rails g migration create_median_function
-```
+### 0.2.0
 
-with:
-
-```ruby
-def up
-  ActiveMedian.create_function
-end
-
-def down
-  ActiveMedian.drop_function
-end
-```
-
-Rails can’t store functions in `schema.rb`, so add to your `Rakefile`:
-
-```ruby
-Rake::Task["db:schema:load"].enhance do
-  ActiveMedian.create_function
-end
-```
-
-Or change the dump format to `sql` in `config/application.rb`:
-
-```ruby
-config.active_record.schema_format = :sql
-```
+A native database function is no longer required. Create a migration with `ActiveMedian.drop_function` to remove it.
 
 ## Contributing
 

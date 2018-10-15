@@ -1,3 +1,12 @@
+## 0.2.0
+
+- Added support for MariaDB 10.2+
+- Use `PERCENTILE_CONT` for 4x performance increase
+
+Breaking
+
+- Dropped support for Postgres < 9.4
+
 ## 0.1.4
 
 - Added `drop_function` method

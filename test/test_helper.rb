@@ -5,7 +5,8 @@ require "minitest/pride"
 require "active_record"
 require "logger"
 
-ActiveRecord::Base.establish_connection adapter: "postgresql", database: "active_median_test"
+adapter = ENV["ADAPTER"] || "postgres"
+ActiveRecord::Base.establish_connection("#{adapter}://localhost/active_median_test")
 
 ActiveRecord::Base.logger = Logger.new(STDOUT) if ENV["VERBOSE"]
 
