@@ -1,3 +1,7 @@
+## 0.2.1 [unreleased]
+
+- Added support for arrays and hashes
+
 ## 0.2.0
 
 - Added support for MariaDB 10.3.3+ and SQLite

@@ -1,6 +1,7 @@
 require "active_support"
 
 require "active_median/model"
+require "active_median/enumerable"
 require "active_median/version"
 
 module ActiveMedian

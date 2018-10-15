@@ -54,4 +54,26 @@ class TestActiveMedian < Minitest::Test
     user.posts.create!(comments_count: 1)
     assert_equal 1, user.posts.median(:comments_count)
   end
+
+  def test_array_even
+    assert_equal 2.5, [1, 1, 2, 3, 4, 100].median
+  end
+
+  def test_array_odd
+    assert_equal 2, [1, 1, 2, 4, 100].median
+  end
+
+  def test_array_block
+    assert_equal 5, [1, 1, 2, 3, 4, 100].median { |v| v * 2 }
+  end
+
+  def test_hash
+    assert_raises do
+      {a: 1, b: 1, c: 2}.median
+    end
+  end
+
+  def test_hash_block
+    assert_equal 2.5, {a: 1, b: 1, c: 2, d: 3, e: 4, f: 100}.median { |k, v| v }
+  end
 end

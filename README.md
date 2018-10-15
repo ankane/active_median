@@ -2,7 +2,7 @@
 
 Median for ActiveRecord
 
-Supports PostgreSQL 9.4+, MariaDB 10.3.3+, and SQLite
+Supports PostgreSQL 9.4+, MariaDB 10.3.3+, and SQLite, plus arrays and hashes
 
 :fire: Uses native functions for blazing performance
 
@@ -21,6 +21,18 @@ Order.group("date_trunc('week', created_at)").median(:total)
 ```
 
 Be sure to [sanitize user input](https://rails-sqli.org/) like you must with other aggregate methods like `sum`.
+
+## Arrays and Hashes [master]
+
+```ruby
+[1, 2, 3].median
+```
+
+You can also pass a block.
+
+```ruby
+{a: 1, b: 2, c: 3}.median { |k, v| v }
+```
 
 ## Installation
 
