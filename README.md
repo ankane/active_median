@@ -20,19 +20,6 @@ Works with grouping, too.
 Order.group(:store_id).median(:total)
 ```
 
-## User Input
-
-If passing user input as the column, be sure to sanitize it first like you must [with other aggregate methods like `sum`](https://rails-sqli.org/).
-
-```ruby
-column = params[:column]
-
-# check against permitted columns
-raise "Unpermitted column" unless ["column_a", "column_b"].include?(column)
-
-User.median(column)
-```
-
 ## Arrays and Hashes [master]
 
 ```ruby
@@ -43,6 +30,19 @@ You can also pass a block.
 
 ```ruby
 {a: 1, b: 2, c: 3}.median { |k, v| v }
+```
+
+## User Input
+
+If passing user input as the column, be sure to sanitize it first [like you must with other aggregate methods](https://rails-sqli.org/) like `sum`.
+
+```ruby
+column = params[:column]
+
+# check against permitted columns
+raise "Unpermitted column" unless ["column_a", "column_b"].include?(column)
+
+User.median(column)
 ```
 
 ## Installation
