@@ -6,10 +6,12 @@ require "active_record"
 require "groupdate"
 require "logger"
 
-adapter = ENV["ADAPTER"] || "postgresql"
+def adapter
+  ENV["ADAPTER"] || "postgresql"
+end
 
 def sqlite?
-  ENV["ADAPTER"] == "sqlite3"
+  adapter == "sqlite3"
 end
 
 ActiveRecord::Base.establish_connection adapter: adapter, database: sqlite? ? ":memory:" : "active_median_test"
