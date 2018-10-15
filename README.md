@@ -4,6 +4,8 @@ Median for ActiveRecord
 
 Supports PostgreSQL 9.4+, MariaDB 10.3.3+, and SQLite
 
+:fire: Uses native functions for blazing performance
+
 [![Build Status](https://travis-ci.org/ankane/active_median.svg)](https://travis-ci.org/ankane/active_median)
 
 ## Usage
@@ -47,7 +49,7 @@ db.enable_load_extension(0)
 
 ### 0.2.0
 
-A native database function is no longer needed. Create a migration with `ActiveMedian.drop_function` to remove it.
+A user-defined function is no longer needed. Create a migration with `ActiveMedian.drop_function` to remove it.
 
 ## Contributing
 
