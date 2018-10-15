@@ -34,7 +34,7 @@ You can also pass a block.
 
 ## User Input
 
-If passing user input as the column, be sure to sanitize it first [like you must with other aggregate methods](https://rails-sqli.org/) like `sum`.
+If passing user input as the column, be sure to sanitize it first [like you must](https://rails-sqli.org/) with other aggregate methods like `sum`.
 
 ```ruby
 column = params[:column]
