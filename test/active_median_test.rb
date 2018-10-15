@@ -55,6 +55,10 @@ class TestActiveMedian < Minitest::Test
     assert_equal 1, user.posts.median(:comments_count)
   end
 
+  def test_groupdate
+    assert_equal 2, User.group_by_day(:created_at, last: 2).median(:visits_count).size
+  end
+
   def test_array_even
     assert_equal 2.5, [1, 1, 2, 3, 4, 100].median
   end

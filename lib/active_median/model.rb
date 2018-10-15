@@ -27,11 +27,19 @@ module ActiveMedian
         rows << (result.column_types.empty? ? untyped_row : columns.each_with_index.map { |c, i| untyped_row[i] ? result.column_types[c].send(cast_method, untyped_row[i]) : untyped_row[i] })
       end
 
-      if group_values.any?
-        Hash[rows.map { |r| [r.size == 2 ? r[0] : r[0..-2], r[-1]] }]
-      else
-        rows[0] && rows[0][0]
+      result =
+        if group_values.any?
+          Hash[rows.map { |r| [r.size == 2 ? r[0] : r[0..-2], r[-1]] }]
+        else
+          rows[0] && rows[0][0]
+        end
+
+      # groupdate private api
+      if relation.try(:groupdate_values)
+        result = Groupdate::Magic::Relation.process_result(relation, result)
       end
+
+      result
     end
   end
 end

@@ -1,6 +1,7 @@
 ## 0.2.1 [unreleased]
 
 - Added support for arrays and hashes
+- Added compatibility with Groupdate 4
 
 ## 0.2.0
 
