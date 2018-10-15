@@ -22,7 +22,7 @@ Order.group(:store_id).median(:total)
 
 ## User Input
 
-If passing user input as the column, be sure to sanitize it first like you must with other aggregate methods like `sum`.
+If passing user input as the column, be sure to sanitize it first like you must [with other aggregate methods like `sum`](https://rails-sqli.org/).
 
 ```ruby
 column = params[:column]
