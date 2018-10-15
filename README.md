@@ -20,7 +20,7 @@ Works with grouping, too.
 Order.group(:store_id).median(:total)
 ```
 
-## Arrays and Hashes [master]
+## Arrays and Hashes
 
 ```ruby
 [1, 2, 3].median

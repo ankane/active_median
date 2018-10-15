@@ -1,4 +1,4 @@
-## 0.2.1 [unreleased]
+## 0.2.1
 
 - Added support for arrays and hashes
 - Added compatibility with Groupdate 4
