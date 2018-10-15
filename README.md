@@ -28,6 +28,8 @@ Add this line to your application’s Gemfile:
 gem 'active_median'
 ```
 
+For SQLite, also follow the instructions below.
+
 ### SQLite
 
 SQLite requires a [community extension](https://www.sqlite.org/contrib). Download [extension-functions.c](https://www.sqlite.org/contrib/download/extension-functions.c) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform. On Mac, use:
