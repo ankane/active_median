@@ -20,6 +20,8 @@ Works with grouping, too.
 Order.group("date_trunc('week', created_at)").median(:total)
 ```
 
+Be sure to [sanitize user input](https://rails-sqli.org/) like you must with other aggregate methods like `sum`.
+
 ## Installation
 
 Add this line to your application’s Gemfile:
