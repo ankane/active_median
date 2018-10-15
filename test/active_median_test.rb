@@ -30,6 +30,18 @@ class TestActiveMedian < Minitest::Test
     assert_equal 0.25, User.median(:rating)
   end
 
+  def test_group
+    [1, 2, 3, 4, 5, 6].each { |n| User.create!(visits_count: n, name: n < 4 ? "A" : "B") }
+    expected = {"A" => 2, "B" => 5}
+    assert_equal expected, User.group(:name).median(:visits_count)
+  end
+
+  def test_double_group
+    [1, 2, 3, 4, 5, 6].each { |n| User.create!(rating: n, name: n < 4 ? "A" : "B", visits_count: n < 4 ? 1 : 2) }
+    expected = {["A", 1] => 2, ["B", 2] => 5}
+    assert_equal expected, User.group(:name).group(:visits_count).median(:rating)
+  end
+
   def test_drop
     ActiveMedian.drop_function
     error = assert_raises(ActiveRecord::StatementInvalid) { User.median(:visits_count) }
