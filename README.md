@@ -30,7 +30,7 @@ gem 'active_median'
 
 ### 0.2.0
 
-A native database function is no longer required. Create a migration with `ActiveMedian.drop_function` to remove it.
+A native database function is no longer needed. Create a migration with `ActiveMedian.drop_function` to remove it.
 
 ## Contributing
 
