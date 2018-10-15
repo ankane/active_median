@@ -5,10 +5,21 @@ require "minitest/pride"
 require "active_record"
 require "logger"
 
-adapter = ENV["ADAPTER"] || "postgres"
-ActiveRecord::Base.establish_connection("#{adapter}://localhost/active_median_test")
+adapter = ENV["ADAPTER"] || "postgresql"
 
+def sqlite?
+  ENV["ADAPTER"] == "sqlite3"
+end
+
+ActiveRecord::Base.establish_connection adapter: adapter, database: sqlite? ? ":memory:" : "active_median_test"
 ActiveRecord::Base.logger = Logger.new(STDOUT) if ENV["VERBOSE"]
+
+if sqlite?
+  db = ActiveRecord::Base.connection.raw_connection
+  db.enable_load_extension(1)
+  db.load_extension("/tmp/extension-functions.dylib")
+  db.enable_load_extension(0)
+end
 
 ActiveRecord::Migration.create_table :users, force: true do |t|
   t.integer :visits_count

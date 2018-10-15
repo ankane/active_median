@@ -1,6 +1,6 @@
 ## 0.2.0
 
-- Added support for MariaDB 10.3.3+
+- Added support for MariaDB 10.3.3+ and SQLite
 - Use `PERCENTILE_CONT` for 4x performance increase
 
 Breaking

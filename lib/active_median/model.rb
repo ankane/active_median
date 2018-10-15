@@ -4,12 +4,15 @@ module ActiveMedian
       group_values = all.group_values
 
       relation =
-        if connection.adapter_name =~ /mysql/i
+        case connection.adapter_name
+        when /mysql/i
           if group_values.any?
             over = "PARTITION BY #{group_values.join(", ")}"
           end
 
           select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+        when /sqlite/i
+          select(*group_values, "MEDIAN(#{column})")
         else
           select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column})")
         end

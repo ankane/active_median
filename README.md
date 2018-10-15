@@ -2,7 +2,7 @@
 
 Median for ActiveRecord
 
-Supports PostgreSQL 9.4+ and MariaDB 10.3.3+
+Supports PostgreSQL 9.4+, MariaDB 10.3.3+, and SQLite
 
 [![Build Status](https://travis-ci.org/ankane/active_median.svg)](https://travis-ci.org/ankane/active_median)
 
@@ -24,6 +24,23 @@ Add this line to your application’s Gemfile:
 
 ```ruby
 gem 'active_median'
+```
+
+### SQLite
+
+SQLite requires a [community extension](https://www.sqlite.org/contrib). Download [extension-functions.c](https://www.sqlite.org/contrib/download/extension-functions.c) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform. On Mac, use:
+
+```sh
+gcc -g -fPIC -dynamiclib extension-functions.c -o extension-functions.dylib
+```
+
+To load it in Rails, create an initializer with:
+
+```ruby
+db = ActiveRecord::Base.connection.raw_connection
+db.enable_load_extension(1)
+db.load_extension("extension-functions.dylib")
+db.enable_load_extension(0)
 ```
 
 ## Upgrading
