@@ -7,6 +7,7 @@ module ActiveMedian
         case connection.adapter_name
         when /mysql/i
           # assume mariadb by default
+          # use send as this method is private in Rails 4.2
           mariadb = connection.send(:mariadb?) rescue true
 
           if mariadb
