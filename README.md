@@ -2,7 +2,12 @@
 
 Median for ActiveRecord
 
-Supports PostgreSQL 9.4+, MariaDB 10.3.3+, and SQLite, plus arrays and hashes
+Supports:
+
+- PostgreSQL 9.4+
+- MariaDB 10.3.3+
+- MySQL and SQL (with extensions)
+- Arrays and hashes
 
 :fire: Uses native functions for blazing performance
 
@@ -53,7 +58,20 @@ Add this line to your application’s Gemfile:
 gem 'active_median'
 ```
 
-For SQLite, also follow the instructions below.
+For MySQL and SQLite, also follow the instructions below.
+
+### MySQL [master]
+
+MySQL requires the `PERCENTILE_CONT` function from [udf_infusion](https://github.com/infusion/udf_infusion). To install it, do:
+
+```sh
+git clone https://github.com/infusion/udf_infusion.git
+cd udf_infusion
+./configure --enable-functions="percentile_cont"
+make
+sudo make install
+mysql <options> < load.sql
+```
 
 ### SQLite
 

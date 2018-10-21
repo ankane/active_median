@@ -6,11 +6,18 @@ module ActiveMedian
       relation =
         case connection.adapter_name
         when /mysql/i
-          if group_values.any?
-            over = "PARTITION BY #{group_values.join(", ")}"
-          end
+          # assume mariadb by default
+          mariadb = connection.send(:mariadb?) rescue true
 
-          select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+          if mariadb
+            if group_values.any?
+              over = "PARTITION BY #{group_values.join(", ")}"
+            end
+
+            select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+          else
+            select(*group_values, "PERCENTILE_CONT(#{column}, 0.50)")
+          end
         when /sqlite/i
           select(*group_values, "MEDIAN(#{column})")
         else
