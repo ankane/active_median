@@ -6,8 +6,8 @@ Supports:
 
 - PostgreSQL 9.4+
 - MariaDB 10.3.3+
-- SQL Server 2012+
 - MySQL and SQL (with extensions)
+- SQL Server 2012+
 - Arrays and hashes
 
 :fire: Uses native functions for blazing performance
@@ -61,7 +61,7 @@ gem 'active_median'
 
 For MySQL and SQLite, also follow the instructions below.
 
-### MySQL [master]
+### MySQL
 
 MySQL requires the `PERCENTILE_CONT` function from [udf_infusion](https://github.com/infusion/udf_infusion). To install it, do:
 
