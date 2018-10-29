@@ -28,8 +28,10 @@ module ActiveMedian
           select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
         when /sqlite/i
           select(*group_values, "MEDIAN(#{column})")
-        else
+        when /postg/i, /redshift/i # postgis too
           select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column})")
+        else
+          raise "Connection adapter not supported: #{connection.adapter_name}"
         end
 
       result = connection.select_all(relation.to_sql)

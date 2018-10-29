@@ -17,6 +17,8 @@ end
 if adapter == "sqlserver"
   # https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017
   ActiveRecord::Base.establish_connection "sqlserver://SA:YourNewStrong!Passw0rd@localhost:1433/active_median_test"
+elsif adapter == "redshift"
+  ActiveRecord::Base.establish_connection ENV["DATABASE_URL"]
 else
   ActiveRecord::Base.establish_connection adapter: adapter, database: sqlite? ? ":memory:" : "active_median_test"
 end

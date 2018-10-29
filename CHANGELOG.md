@@ -1,7 +1,7 @@
 ## 0.2.2 [unreleased]
 
 - Added support for MySQL with udf_infusion
-- Added support for SQL Server
+- Added support for SQL Server and Redshift
 
 ## 0.2.1
 
