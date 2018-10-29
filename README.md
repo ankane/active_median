@@ -6,6 +6,7 @@ Supports:
 
 - PostgreSQL 9.4+
 - MariaDB 10.3.3+
+- SQL Server 2012+
 - MySQL and SQL (with extensions)
 - Arrays and hashes
 

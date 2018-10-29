@@ -20,6 +20,12 @@ module ActiveMedian
             # if mysql gets native function, check (and memoize) version first
             select(*group_values, "PERCENTILE_CONT(#{column}, 0.50)")
           end
+        when /sqlserver/i
+          if group_values.any?
+            over = "PARTITION BY #{group_values.join(", ")}"
+          end
+
+          select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
         when /sqlite/i
           select(*group_values, "MEDIAN(#{column})")
         else

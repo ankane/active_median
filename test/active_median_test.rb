@@ -56,7 +56,7 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_groupdate
-    skip if adapter == "mysql2"
+    skip if adapter == "mysql2" || adapter == "sqlserver"
     User.create!(visits_count: 5)
     result = User.group_by_day(:created_at, last: 2).median(:visits_count)
     assert_equal [nil, 5], result.values
