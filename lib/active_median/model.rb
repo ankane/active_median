@@ -17,6 +17,7 @@ module ActiveMedian
 
             select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
           else
+            # if mysql gets native function, check (and memoize) version first
             select(*group_values, "PERCENTILE_CONT(#{column}, 0.50)")
           end
         when /sqlite/i
