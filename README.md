@@ -1,6 +1,6 @@
-# ActiveMedian
+# Active Median
 
-Median for ActiveRecord
+Median for Active Record
 
 Supports:
 
