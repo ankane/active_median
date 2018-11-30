@@ -1,4 +1,4 @@
-# Active Median
+# ActiveMedian
 
 Median for Active Record
 
