@@ -14,7 +14,17 @@ Supports:
 
 [![Build Status](https://travis-ci.org/ankane/active_median.svg)](https://travis-ci.org/ankane/active_median)
 
-## Usage
+## Getting Started
+
+Add this line to your application’s Gemfile:
+
+```ruby
+gem 'active_median'
+```
+
+For MySQL and SQLite, also follow [these instructions](#additional-instructions).
+
+## Models
 
 ```ruby
 Item.median(:price)
@@ -51,15 +61,7 @@ raise "Unpermitted column" unless ["column_a", "column_b"].include?(column)
 User.median(column)
 ```
 
-## Installation
-
-Add this line to your application’s Gemfile:
-
-```ruby
-gem 'active_median'
-```
-
-For MySQL and SQLite, also follow the instructions below.
+## Additional Instructions
 
 ### MySQL
 
