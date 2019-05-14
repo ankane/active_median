@@ -55,6 +55,14 @@ class TestActiveMedian < Minitest::Test
     assert_equal 1, user.posts.median(:comments_count)
   end
 
+  def test_references
+    user = User.create!
+    user.posts.create!(comments_count: 1)
+    # see https://github.com/ankane/active_median/issues/9
+    # use left_outer_joins(:posts) instead
+    # assert_equal 1, User.includes(:posts).references(:posts).median(:comments_count)
+  end
+
   def test_groupdate
     skip if adapter == "mysql2" || adapter == "sqlserver"
     User.create!(visits_count: 5)
