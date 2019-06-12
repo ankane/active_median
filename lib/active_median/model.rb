@@ -39,9 +39,8 @@ module ActiveMedian
       # typecast
       rows = []
       columns = result.columns
-      cast_method = ActiveRecord::VERSION::MAJOR < 5 ? :type_cast : :cast_value
       result.rows.each do |untyped_row|
-        rows << (result.column_types.empty? ? untyped_row : columns.each_with_index.map { |c, i| untyped_row[i] ? result.column_types[c].send(cast_method, untyped_row[i]) : untyped_row[i] })
+        rows << (result.column_types.empty? ? untyped_row : columns.each_with_index.map { |c, i| untyped_row[i] ? result.column_types[c].send(:cast_value, untyped_row[i]) : untyped_row[i] })
       end
 
       result =

@@ -1,3 +1,7 @@
+## 0.3.0 [unreleased]
+
+- Dropped support for Rails 4.2
+
 ## 0.2.2
 
 - Added support for MySQL with udf_infusion

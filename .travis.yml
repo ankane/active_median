@@ -1,12 +1,10 @@
 language: ruby
-rvm:
-  - 2.5.1
+rvm: 2.6.3
 sudo: false
 addons:
   postgresql: "9.4"
 script: bundle exec rake test
 before_script:
-  - gem install bundler
   - psql -c 'create database active_median_test;' -U postgres
   - mysql -e 'create database active_median_test;'
 notifications:
@@ -15,13 +13,12 @@ notifications:
     on_failure: change
 gemfile:
   - Gemfile
+  - test/gemfiles/activerecord52.gemfile
   - test/gemfiles/activerecord51.gemfile
   - test/gemfiles/activerecord50.gemfile
-  - test/gemfiles/activerecord42.gemfile
 matrix:
   include:
     - gemfile: test/gemfiles/mysql2.gemfile
       env: ADAPTER=mysql2
-      rvm: 2.5.1
       addons:
         mariadb: "10.3"
