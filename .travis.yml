@@ -1,12 +1,11 @@
+dist: xenial
 language: ruby
 rvm: 2.6.3
-sudo: false
-addons:
-  postgresql: "9.4"
 script: bundle exec rake test
+services:
+  - postgresql
 before_script:
   - createdb active_median_test
-  - mysqladmin create active_median_test
 notifications:
   email:
     on_success: never
@@ -22,6 +21,8 @@ matrix:
       env: ADAPTER=mysql2
       addons:
         mariadb: "10.3"
+      before_script:
+        - mysqladmin create active_median_test
     - gemfile: test/gemfiles/mongoid7.gemfile
       services:
         - mongodb
