@@ -22,3 +22,6 @@ matrix:
       env: ADAPTER=mysql2
       addons:
         mariadb: "10.3"
+    - gemfile: test/gemfiles/mongoid7.gemfile
+      services:
+        - mongodb

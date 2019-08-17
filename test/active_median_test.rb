@@ -31,12 +31,16 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_group
+    skip if mongoid?
+
     [1, 2, 3, 4, 5, 6].each { |n| User.create!(visits_count: n, name: n < 4 ? "A" : "B") }
     expected = {"A" => 2, "B" => 5}
     assert_equal expected, User.group(:name).median(:visits_count)
   end
 
   def test_complex_group
+    skip if mongoid?
+
     [1, 2, 3, 4, 5, 6].each { |n| User.create!(visits_count: n, name: n < 4 ? "A" : "B") }
     expected = {"AC" => 2, "BC" => 5}
     group = sqlite? ? "name || 'C'" : "CONCAT(name, 'C')"
@@ -44,12 +48,16 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_double_group
+    skip if mongoid?
+
     [1, 2, 3, 4, 5, 6].each { |n| User.create!(rating: n, name: n < 4 ? "A" : "B", visits_count: n < 4 ? 1 : 2) }
     expected = {["A", 1] => 2, ["B", 2] => 5}
     assert_equal expected, User.group(:name).group(:visits_count).median(:rating)
   end
 
   def test_association
+    skip if mongoid? # TODO fix
+
     user = User.create!
     user.posts.create!(comments_count: 1)
     assert_equal 1, user.posts.median(:comments_count)
@@ -64,7 +72,7 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_groupdate
-    skip if adapter == "mysql2" || adapter == "sqlserver"
+    skip if adapter == "mysql2" || adapter == "sqlserver" || mongoid?
     User.create!(visits_count: 5)
     result = User.group_by_day(:created_at, last: 2).median(:visits_count)
     assert_equal [nil, 5], result.values

@@ -1,5 +1,6 @@
 ## 0.3.0 [unreleased]
 
+- Added support for Mongoid
 - Dropped support for Rails 4.2
 
 ## 0.2.2
