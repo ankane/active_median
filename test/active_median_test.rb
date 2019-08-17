@@ -56,8 +56,6 @@ class TestActiveMedian < Minitest::Test
   end
 
   def test_association
-    skip if mongoid? # TODO fix
-
     user = User.create!
     user.posts.create!(comments_count: 1)
     assert_equal 1, user.posts.median(:comments_count)
