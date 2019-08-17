@@ -3,7 +3,7 @@ require_relative "lib/active_median/version"
 Gem::Specification.new do |spec|
   spec.name          = "active_median"
   spec.version       = ActiveMedian::VERSION
-  spec.summary       = "Median for Active Record"
+  spec.summary       = "Median for Active Record, Mongoid, arrays, and hashes"
   spec.homepage      = "https://github.com/ankane/active_median"
   spec.license       = "MIT"
 

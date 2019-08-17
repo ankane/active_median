@@ -1,6 +1,6 @@
 # ActiveMedian
 
-Median for Active Record
+Median for Active Record, Mongoid [master], arrays, and hashes
 
 Supports:
 
@@ -8,8 +8,6 @@ Supports:
 - MariaDB 10.3.3+
 - MySQL and SQL (with extensions)
 - SQL Server 2012+
-- Mongoid [master]
-- Arrays and hashes
 
 :fire: Uses native functions for blazing performance
 
