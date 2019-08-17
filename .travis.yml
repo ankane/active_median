@@ -22,7 +22,9 @@ matrix:
       addons:
         mariadb: "10.3"
       before_script:
-        - mysqladmin create active_median_test
+        - mysql -e 'create database active_median_test;'
     - gemfile: test/gemfiles/mongoid7.gemfile
       services:
         - mongodb
+      before_script:
+        - echo "Skipping createdb"
