@@ -10,7 +10,7 @@ else
   ActiveRecord::Base.establish_connection adapter: adapter, database: sqlite? ? ":memory:" : "active_median_test"
 end
 
-ActiveRecord::Base.logger = Logger.new(STDOUT) if ENV["VERBOSE"]
+ActiveRecord::Base.logger = $logger
 
 if sqlite?
   db = ActiveRecord::Base.connection.raw_connection
