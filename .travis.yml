@@ -22,7 +22,9 @@ matrix:
       addons:
         mariadb: "10.3"
       before_script:
-        - mysql -e 'create database active_median_test;'
+        - mysqladmin create active_median_test
+        - mysql -e 'create user travis@localhost;'
+        - mysql -e 'grant all on *.* to travis@localhost;'
     - gemfile: test/gemfiles/mongoid7.gemfile
       services:
         - mongodb
