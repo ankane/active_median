@@ -1,6 +1,6 @@
 # ActiveMedian
 
-Median for Active Record, Mongoid [master], arrays, and hashes
+Median for Active Record, Mongoid, arrays, and hashes
 
 Supports:
 
