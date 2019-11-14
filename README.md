@@ -112,6 +112,7 @@ To get started with development and testing:
 ```sh
 git clone https://github.com/ankane/active_median.git
 cd active_median
+createdb active_median_test
 bundle install
 bundle exec rake test
 ```
