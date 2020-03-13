@@ -1,9 +1,11 @@
-dist: xenial
+dist: bionic
 language: ruby
-rvm: 2.6.3
+rvm: 2.6
 script: bundle exec rake test
 services:
   - postgresql
+addons:
+  postgresql: 10
 before_script:
   - createdb active_median_test
 notifications:
