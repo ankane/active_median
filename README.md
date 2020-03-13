@@ -34,7 +34,7 @@ Item.median(:price)
 Percentile [ActiveRecord, master]
 
 ```ruby
-Item.percentile(0.95, :price)
+Item.percentile(:price, 0.95)
 ```
 
 Works with grouping, too.

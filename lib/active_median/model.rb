@@ -1,10 +1,10 @@
 module ActiveMedian
   module Model
     def median(column)
-      percentile(0.5, column)
+      percentile(column, 0.5)
     end
 
-    def percentile(percentile, column)
+    def percentile(column, percentile)
       # prevents SQL injection
       percentile = connection.quote(percentile.to_f)
 
