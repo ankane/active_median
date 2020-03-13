@@ -45,8 +45,16 @@ Order.group(:store_id).median(:total)
 
 ## Arrays and Hashes
 
+Median
+
 ```ruby
 [1, 2, 3].median
+```
+
+Percentile [master]
+
+```ruby
+[1, 2, 3].percentile(0.75)
 ```
 
 You can also pass a block.
