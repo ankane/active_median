@@ -27,11 +27,18 @@ class PercentileTest < Minitest::Test
     assert_equal 4, User.percentile(:visits_count, 1)
   end
 
-  def test_bad
+  def test_bad_column
     [1, 1, 2, 3, 4, 100].each { |n| User.create!(visits_count: n) }
     # prevents injection, returns 0th percentile
     # TODO throw error?
     assert_equal 1, User.percentile(:visits_count, "bad")
+  end
+
+  def test_bad_percentile
+    error = assert_raises(ArgumentError) do
+      User.percentile(:visits_count, 1.1)
+    end
+    assert_equal "percentile is not between 0 and 1", error.message
   end
 
   def test_array_even
@@ -48,5 +55,12 @@ class PercentileTest < Minitest::Test
 
   def test_array_one
     assert_equal 4, [1, 2, 3, 4].percentile(1)
+  end
+
+  def test_array_bad_percentile
+    error = assert_raises(ArgumentError) do
+      [1, 2, 3].percentile(1.1)
+    end
+    assert_equal "percentile is not between 0 and 1", error.message
   end
 end

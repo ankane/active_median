@@ -21,9 +21,11 @@ module Enumerable
       else
         raise ArgumentError, "wrong number of arguments" if args.size != 1
 
+        percentile = args[0].to_f
+        raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
+
         # uses C=1 variant, like percentile_cont
         # https://en.wikipedia.org/wiki/Percentile#The_linear_interpolation_between_closest_ranks_method
-        percentile = args[0].to_f
         sorted = map(&block).sort
         x = percentile * (sorted.size - 1)
         r = x % 1

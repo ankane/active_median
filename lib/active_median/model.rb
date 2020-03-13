@@ -5,8 +5,11 @@ module ActiveMedian
     end
 
     def percentile(column, percentile)
-      # prevents SQL injection
-      percentile = connection.quote(percentile.to_f)
+      percentile = percentile.to_f
+      raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
+
+      # prevent SQL injection
+      percentile = connection.quote(percentile)
 
       group_values = all.group_values
 
