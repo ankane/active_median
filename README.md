@@ -31,7 +31,7 @@ Median
 Item.median(:price)
 ```
 
-Percentile - *ActiveRecord only* [master]
+Percentile [master]
 
 ```ruby
 Item.percentile(:price, 0.95)
