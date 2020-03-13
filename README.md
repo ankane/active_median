@@ -25,8 +25,16 @@ For MySQL and SQLite, also follow [these instructions](#additional-instructions)
 
 ## Models
 
+Median
+
 ```ruby
 Item.median(:price)
+```
+
+Percentile [ActiveRecord, master]
+
+```ruby
+Item.percentile(0.95, :price)
 ```
 
 Works with grouping, too.

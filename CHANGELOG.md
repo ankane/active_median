@@ -1,3 +1,7 @@
+## 0.2.4 (unreleased)
+
+- Added `percentile` method
+
 ## 0.2.3 (2019-09-03)
 
 - Added support for Mongoid

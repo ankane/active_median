@@ -1,6 +1,13 @@
 module ActiveMedian
   module Model
     def median(column)
+      percentile(0.5, column)
+    end
+
+    def percentile(percentile, column)
+      # prevents SQL injection
+      percentile = connection.quote(percentile.to_f)
+
       group_values = all.group_values
 
       relation =
@@ -15,21 +22,25 @@ module ActiveMedian
               over = "PARTITION BY #{group_values.join(", ")}"
             end
 
-            select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+            select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
           else
             # if mysql gets native function, check (and memoize) version first
-            select(*group_values, "PERCENTILE_CONT(#{column}, 0.50)")
+            select(*group_values, "PERCENTILE_CONT(#{column}, #{percentile})")
           end
         when /sqlserver/i
           if group_values.any?
             over = "PARTITION BY #{group_values.join(", ")}"
           end
 
-          select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+          select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
         when /sqlite/i
-          select(*group_values, "MEDIAN(#{column})")
+          if percentile == 0.5
+            select(*group_values, "MEDIAN(#{column})")
+          else
+            raise "Only median supported for SQLite"
+          end
         when /postg/i, /redshift/i # postgis too
-          select(*group_values, "PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY #{column})")
+          select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column})")
         else
           raise "Connection adapter not supported: #{connection.adapter_name}"
         end

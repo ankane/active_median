@@ -1,6 +1,6 @@
 require_relative "test_helper"
 
-class TestActiveMedian < Minitest::Test
+class MedianTest < Minitest::Test
   def setup
     User.delete_all
   end
