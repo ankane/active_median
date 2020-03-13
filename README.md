@@ -31,13 +31,13 @@ Median
 Item.median(:price)
 ```
 
-Percentile [master]
+Percentile
 
 ```ruby
 Item.percentile(:price, 0.95)
 ```
 
-Works with grouping, too.
+Works with grouping, too
 
 ```ruby
 Order.group(:store_id).median(:total)
@@ -51,13 +51,13 @@ Median
 [1, 2, 3].median
 ```
 
-Percentile [master]
+Percentile
 
 ```ruby
 [1, 2, 3].percentile(0.75)
 ```
 
-You can also pass a block.
+You can also pass a block
 
 ```ruby
 {a: 1, b: 2, c: 3}.median { |k, v| v }
