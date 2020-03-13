@@ -19,7 +19,7 @@ module ActiveMedian
         .project(values: 1, count: 1, x: {"$multiply" => ["$count", percentile]})
         .project(values: 1, count: 1, r: {"$mod" => ["$x", 1]}, i: {"$floor" => "$x"})
         .project(values: 1, count: 1, r: 1, i: 1, i2: {"$add" => ["$i", 1]})
-        # make sure i2 <= count (which is count(values) - 1)
+        # make sure i2 <= count (which is values.size - 1)
         .project(values: 1, count: 1, r: 1, i: 1, i2: {"$min" => ["$i2", "$count"]})
         .project(r: 1, beginValue: {"$arrayElemAt" => ["$values", "$i"]}, endValue: {"$arrayElemAt" => ["$values", "$i2"]})
         .project(r: 1, beginValue: 1, result: {"$subtract" => ["$endValue", "$beginValue"]})
