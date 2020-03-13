@@ -45,6 +45,7 @@ module ActiveMedian
           when 1
             select(*group_values, "MAX(#{column})")
           else
+            # LOWER_QUARTILE and UPPER_QUARTILE use different calculation than 0.25 and 0.75
             raise "SQLite only supports 0, 0.5, and 1 percentiles"
           end
         when /postg/i, /redshift/i # postgis too
