@@ -1,6 +1,6 @@
 # ActiveMedian
 
-Median for Active Record, Mongoid, arrays, and hashes
+Median and percentile for Active Record, Mongoid, arrays, and hashes
 
 Supports:
 
@@ -31,7 +31,7 @@ Median
 Item.median(:price)
 ```
 
-Percentile [ActiveRecord, master]
+Percentile - *ActiveRecord only* [master]
 
 ```ruby
 Item.percentile(:price, 0.95)
