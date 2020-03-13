@@ -13,10 +13,12 @@ module ActiveMedian
 
       relation =
         all
+        # sort values
         .group(_id: nil, values: {"$push" => "$#{column}"})
         .unwind("$values")
         .asc(:values)
         .group(_id: nil, values: {"$push" => "$values"}, count: {"$sum" => 1})
+        # use same logic as enumerable
         .project(values: 1, count: {"$subtract" => ["$count", 1]})
         .project(values: 1, x: {"$multiply" => ["$count", percentile]})
         .project(values: 1, r: {"$mod" => ["$x", 1]}, i: {"$floor" => "$x"})
