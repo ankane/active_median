@@ -27,6 +27,11 @@ class PercentileTest < Minitest::Test
     assert_equal 4, User.percentile(:visits_count, 1)
   end
 
+  def test_high
+    [1, 1, 2, 3, 4, 100].each { |n| User.create!(visits_count: n) }
+    assert_in_delta 95.2, User.percentile(:visits_count, 0.99)
+  end
+
   def test_bad_column
     [1, 1, 2, 3, 4, 100].each { |n| User.create!(visits_count: n) }
     # prevents injection, returns 0th percentile
@@ -55,6 +60,10 @@ class PercentileTest < Minitest::Test
 
   def test_array_one
     assert_equal 4, [1, 2, 3, 4].percentile(1)
+  end
+
+  def test_array_high
+    assert_in_delta 95.2, [1, 1, 2, 3, 4, 100].percentile(0.99)
   end
 
   def test_array_bad_percentile
