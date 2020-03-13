@@ -2,7 +2,7 @@ require_relative "test_helper"
 
 class PercentileTest < Minitest::Test
   def setup
-    skip if mongoid?
+    skip if mongoid? || sqlite?
 
     User.delete_all
   end

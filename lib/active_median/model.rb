@@ -37,7 +37,7 @@ module ActiveMedian
 
           select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
         when /sqlite/i
-          if percentile == 0.5
+          if percentile == "0.5"
             select(*group_values, "MEDIAN(#{column})")
           else
             raise "Only median supported for SQLite"
