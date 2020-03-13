@@ -2,17 +2,19 @@ require_relative "test_helper"
 
 class PercentileTest < Minitest::Test
   def setup
-    skip if mongoid? || sqlite?
+    skip if mongoid?
 
     User.delete_all
   end
 
   def test_even
+    skip if sqlite?
     [1, 2, 3, 4].each { |n| User.create!(visits_count: n) }
     assert_in_delta 3.25, User.percentile(:visits_count, 0.75)
   end
 
   def test_odd
+    skip if sqlite?
     [15, 20, 35, 40, 50].each { |n| User.create!(visits_count: n) }
     assert_equal 29, User.percentile(:visits_count, 0.4)
   end

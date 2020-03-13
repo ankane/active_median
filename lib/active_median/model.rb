@@ -37,10 +37,15 @@ module ActiveMedian
 
           select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
         when /sqlite/i
-          if percentile == "0.5"
+          case percentile.to_f
+          when 0
+            select(*group_values, "MIN(#{column})")
+          when 0.5
             select(*group_values, "MEDIAN(#{column})")
+          when 1
+            select(*group_values, "MAX(#{column})")
           else
-            raise "Only median supported for SQLite"
+            raise "SQLite only supports 0, 0.5, and 1 percentiles"
           end
         when /postg/i, /redshift/i # postgis too
           select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column})")
