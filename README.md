@@ -34,7 +34,7 @@ Item.median(:price)
 Percentile
 
 ```ruby
-Item.percentile(:price, 0.95)
+Request.percentile(:response_time, 0.95)
 ```
 
 Works with grouping, too
@@ -54,7 +54,7 @@ Median
 Percentile
 
 ```ruby
-[1, 2, 3].percentile(0.75)
+[1, 2, 3].percentile(0.95)
 ```
 
 You can also pass a block
