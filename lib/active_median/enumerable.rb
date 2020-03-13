@@ -6,7 +6,7 @@ module Enumerable
       elsif !block && respond_to?(:with_scope)
         with_scope(self) { klass.median(*args) }
       else
-        raise ArgumentError, "wrong number of arguments" if args.any?
+        raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0)" if args.any?
         percentile(0.5, &block)
       end
     end
@@ -19,7 +19,7 @@ module Enumerable
       elsif !block && respond_to?(:with_scope)
         with_scope(self) { klass.percentile(*args) }
       else
-        raise ArgumentError, "wrong number of arguments" if args.size != 1
+        raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 1)" if args.size != 1
 
         percentile = args[0].to_f
         raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
