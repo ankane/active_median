@@ -8,6 +8,11 @@ module ActiveMedian
       percentile = percentile.to_f
       raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
 
+      # column resolution
+      node = relation.send(:arel_columns, [column]).first
+      node = Arel::Nodes::SqlLiteral.new(node) if node.is_a?(String)
+      column = relation.connection.visitor.accept(node, Arel::Collectors::SQLString.new).value
+
       # prevent SQL injection
       percentile = connection.quote(percentile)
 

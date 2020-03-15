@@ -55,6 +55,21 @@ class MedianTest < Minitest::Test
     assert_equal expected, User.group(:name).group(:visits_count).median(:rating)
   end
 
+  def test_expression
+    skip if mongoid?
+
+    [1, 1, 2, 4, 100].each { |n| User.create!(visits_count: n) }
+    assert_equal 3, User.median("visits_count + 1")
+  end
+
+  def test_column_resolution
+    skip if mongoid?
+
+    assert_nil User.joins(:posts).average(:id)
+    # should mirror average
+    assert_nil User.joins(:posts).median(:id)
+  end
+
   def test_association
     user = User.create!
     user.posts.create!(comments_count: 1)
