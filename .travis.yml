@@ -16,11 +16,11 @@ jobs:
     - rvm: 2.7
       gemfile: Gemfile
     - rvm: 2.6
-      gemfile: test/gemfiles/rails52.gemfile
+      gemfile: test/gemfiles/activerecord52.gemfile
     - rvm: 2.5
-      gemfile: test/gemfiles/rails51.gemfile
+      gemfile: test/gemfiles/activerecord51.gemfile
     - rvm: 2.4
-      gemfile: test/gemfiles/rails50.gemfile
+      gemfile: test/gemfiles/activerecord50.gemfile
     - rvm: 2.7
       gemfile: test/gemfiles/mysql2.gemfile
       env: ADAPTER=mysql2
