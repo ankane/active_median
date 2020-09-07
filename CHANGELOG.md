@@ -1,4 +1,4 @@
-## 0.2.5 (unreleased)
+## 0.2.5 (2020-09-07)
 
 - Added warning for non-attribute argument
 
