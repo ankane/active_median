@@ -8,6 +8,7 @@ Supports:
 - MariaDB 10.3.3+
 - MySQL and SQL (with extensions)
 - SQL Server 2012+
+- MongoDB 2.1+
 
 :fire: Uses native functions for blazing performance
 
