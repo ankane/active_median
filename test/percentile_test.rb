@@ -32,6 +32,22 @@ class PercentileTest < Minitest::Test
     assert_in_delta 95.2, User.percentile(:visits_count, 0.99)
   end
 
+  def test_expression
+    skip if mongoid?
+
+    [1, 2, 3, 4].each { |n| User.create!(visits_count: n) }
+    assert_in_delta 4.25, User.percentile(Arel.sql("visits_count + 1"), 0.75)
+  end
+
+  def test_expression_no_arel
+    skip if mongoid?
+
+    message = "[active_median] Non-attribute argument: visits_count + 1. Use Arel.sql() for known-safe values. This will raise an error in ActiveMedian 0.3.0\n"
+    assert_output(nil, message) do
+      User.percentile("visits_count + 1", 0.75)
+    end
+  end
+
   def test_bad_column
     [1, 1, 2, 3, 4, 100].each { |n| User.create!(visits_count: n) }
     # prevents injection, returns 0th percentile

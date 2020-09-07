@@ -8,6 +8,13 @@ module ActiveMedian
       percentile = percentile.to_f
       raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
 
+      # basic version of Active Record disallow_raw_sql!
+      # symbol = column (safe), Arel node = SQL (safe), other = untrusted
+      # matches table.column and column
+      unless column.is_a?(Symbol) || column.is_a?(Arel::Nodes::SqlLiteral) || /\A\w+(\.\w+)?\z/i.match(column.to_s)
+        warn "[active_median] Non-attribute argument: #{column}. Use Arel.sql() for known-safe values. This will raise an error in ActiveMedian 0.3.0"
+      end
+
       # column resolution
       node = relation.send(:arel_columns, [column]).first
       node = Arel::Nodes::SqlLiteral.new(node) if node.is_a?(String)

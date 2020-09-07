@@ -1,3 +1,7 @@
+## 0.2.5 (unreleased)
+
+- Added warning for non-attribute argument
+
 ## 0.2.4 (2020-03-12)
 
 - Added `percentile` method
