@@ -24,7 +24,7 @@ ActiveRecord::Migration.create_table :users, force: true do |t|
   t.decimal :latitude, precision: 10, scale: 5
   t.float :rating
   t.string :name
-  t.timestamp :created_at
+  t.datetime :created_at
 end
 
 ActiveRecord::Migration.create_table :posts, force: true do |t|
