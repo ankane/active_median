@@ -66,9 +66,10 @@ class MedianTest < Minitest::Test
     skip if mongoid?
 
     message = "[active_median] Non-attribute argument: visits_count + 1. Use Arel.sql() for known-safe values. This will raise an error in ActiveMedian 0.3.0\n"
-    assert_output(nil, message) do
+    _, stderr = capture_io do
       User.median("visits_count + 1")
     end
+    assert_match message, stderr
   end
 
   def test_column_resolution
