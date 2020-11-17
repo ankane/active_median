@@ -30,10 +30,12 @@ end
 ActiveRecord::Migration.create_table :posts, force: true do |t|
   t.references :user
   t.integer :comments_count
+  t.datetime :created_at
 end
 
 class User < ActiveRecord::Base
   has_many :posts
+  has_many :ordered_posts, -> { order('created_at asc') }, class_name: 'Post'
 end
 
 class Post < ActiveRecord::Base

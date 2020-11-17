@@ -87,6 +87,12 @@ class MedianTest < Minitest::Test
     assert_equal 1, user.posts.median(:comments_count)
   end
 
+  def test_ordered_association
+    user = User.create!
+    user.posts.create!(comments_count: 1)
+    assert_equal 1, user.ordered_posts.median(:comments_count)
+  end
+
   def test_references
     user = User.create!
     user.posts.create!(comments_count: 1)

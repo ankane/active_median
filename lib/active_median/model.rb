@@ -66,7 +66,7 @@ module ActiveMedian
           raise "Connection adapter not supported: #{connection.adapter_name}"
         end
 
-      result = connection.select_all(relation.to_sql)
+      result = connection.select_all(relation.except(:order).to_sql)
 
       # typecast
       rows = []
