@@ -55,6 +55,24 @@ class MedianTest < Minitest::Test
     assert_equal expected, User.group(:name).group(:visits_count).median(:rating)
   end
 
+  def test_order
+    skip if mongoid?
+
+    User.create!(visits_count: 2)
+    assert 2, User.order(:created_at).average(:visits_count)
+    # assert 2, User.order(:created_at).median(:visits_count)
+  end
+
+  def test_group_order
+    skip if mongoid?
+
+    [1, 2, 3, 4, 5, 6].each { |n| User.create!(visits_count: n, name: n < 4 ? "A" : "B") }
+    assert_equal "A", User.group(:name).order(:name).average(:visits_count).keys.first
+    assert_equal "B", User.group(:name).order("average_visits_count desc").average(:visits_count).keys.first
+    # assert_equal "A", User.group(:name).order(:name).median(:visits_count).keys.first
+    # assert_equal "B", User.group(:name).order("median_visits_count desc").median(:visits_count).keys.first
+  end
+
   def test_expression
     skip if mongoid?
 
