@@ -11,6 +11,7 @@ else
 end
 
 ActiveRecord::Base.logger = $logger
+ActiveRecord::Migration.verbose = ENV["VERBOSE"]
 
 if sqlite?
   db = ActiveRecord::Base.connection.raw_connection
