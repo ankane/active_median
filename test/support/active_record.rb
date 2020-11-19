@@ -3,7 +3,7 @@ require "groupdate"
 
 if adapter == "sqlserver"
   # https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017
-  ActiveRecord::Base.establish_connection "sqlserver://SA:YourNewStrong!Passw0rd@localhost:1433/active_median_test"
+  ActiveRecord::Base.establish_connection "sqlserver://SA:YourStrong!Passw0rd@localhost:1433/active_median_test"
 elsif adapter == "redshift"
   ActiveRecord::Base.establish_connection ENV["DATABASE_URL"]
 else
@@ -16,7 +16,8 @@ ActiveRecord::Migration.verbose = ENV["VERBOSE"]
 if sqlite?
   db = ActiveRecord::Base.connection.raw_connection
   db.enable_load_extension(1)
-  db.load_extension("/tmp/extension-functions.dylib")
+  ext = RbConfig::CONFIG["host_os"] =~ /darwin/i ? "dylib" : "so"
+  db.load_extension("/tmp/extension-functions.#{ext}")
   db.enable_load_extension(0)
 end
 

@@ -12,7 +12,7 @@ Supports:
 
 :fire: Uses native functions for blazing performance
 
-[![Build Status](https://travis-ci.org/ankane/active_median.svg?branch=master)](https://travis-ci.org/ankane/active_median)
+[![Build Status](https://github.com/ankane/active_median/workflows/build/badge.svg?branch=master)](https://github.com/ankane/active_median/actions)
 
 ## Getting Started
 
