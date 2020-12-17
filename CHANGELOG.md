@@ -1,3 +1,7 @@
+## 0.2.6 (unreleased)
+
+- Fixed error with certain column types for Active Record 6.1
+
 ## 0.2.5 (2020-09-07)
 
 - Added warning for non-attribute argument
