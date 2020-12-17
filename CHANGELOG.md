@@ -13,7 +13,7 @@
 ## 0.2.3 (2019-09-03)
 
 - Added support for Mongoid
-- Dropped support for Rails 4.2
+- Dropped support for Active Record 4.2
 
 ## 0.2.2 (2018-10-29)
 
@@ -40,11 +40,11 @@ Breaking
 
 ## 0.1.3 (2016-03-22)
 
-- Added support for ActiveRecord 5.0
+- Added support for Active Record 5.0
 
 ## 0.1.2 (2014-12-27)
 
-- Added support for ActiveRecord 4.2
+- Added support for Active Record 4.2
 
 ## 0.1.1 (2014-08-12)
 
