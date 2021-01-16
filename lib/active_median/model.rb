@@ -66,6 +66,9 @@ module ActiveMedian
           raise "Connection adapter not supported: #{connection.adapter_name}"
         end
 
+      # same as average
+      relation = relation.unscope(:order).distinct!(false) if relation.group_values.empty?
+
       result = connection.select_all(relation.to_sql)
 
       # typecast
