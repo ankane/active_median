@@ -1,4 +1,4 @@
-## 0.2.7 (unreleased)
+## 0.2.7 (2021-01-16)
 
 - Fixed error with order
 
