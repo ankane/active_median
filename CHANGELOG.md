@@ -1,4 +1,4 @@
-## 0.2.8 (unreleased)
+## 0.2.8 (2021-01-16)
 
 - Fixed bug with removing order
 
