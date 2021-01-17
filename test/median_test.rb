@@ -92,9 +92,7 @@ class MedianTest < Minitest::Test
   def test_column_resolution
     skip if mongoid?
 
-    # average returns 0.0 with Active Record < 5.2
-    # assert_nil User.joins(:posts).average(:id)
-    # should mirror average
+    assert_nil User.joins(:posts).average(:id)
     assert_nil User.joins(:posts).median(:id)
   end
 
