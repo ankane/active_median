@@ -50,7 +50,7 @@ class PercentileTest < Minitest::Test
     assert_equal "A", User.group(:name).order(:name).average(:visits_count).keys.first
     assert_equal "B", User.group(:name).order("average_visits_count desc").average(:visits_count).keys.first
     assert_equal "A", User.group(:name).order(:name).percentile(:visits_count, 0.5).keys.first
-    # assert_equal "B", User.group(:name).order("percentile_visits_count desc").percentile(:visits_count, 0.5).keys.first
+    assert_equal "B", User.group(:name).order("percentile_visits_count desc").percentile(:visits_count, 0.5).keys.first
   end
 
   def test_expression

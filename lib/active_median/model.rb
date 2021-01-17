@@ -1,10 +1,16 @@
 module ActiveMedian
   module Model
     def median(column)
-      percentile(column, 0.5)
+      calculate_percentile(column, 0.5, "median")
     end
 
     def percentile(column, percentile)
+      calculate_percentile(column, percentile, "percentile")
+    end
+
+    private
+
+    def calculate_percentile(column, percentile, operation)
       percentile = percentile.to_f
       raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
 
@@ -14,6 +20,11 @@ module ActiveMedian
       unless column.is_a?(Symbol) || column.is_a?(Arel::Nodes::SqlLiteral) || /\A\w+(\.\w+)?\z/i.match(column.to_s)
         warn "[active_median] Non-attribute argument: #{column}. Use Arel.sql() for known-safe values. This will raise an error in ActiveMedian 0.3.0"
       end
+
+      column_alias = relation.send(:column_alias_for, "#{operation} #{column.to_s.downcase}")
+      # safety check
+      # could quote, but want to keep consistent with Active Record
+      raise "Bad column alias: #{column_alias}. Please report a bug." unless column_alias =~ /\A[a-z0-9_]+\z/
 
       # column resolution
       node = relation.send(:arel_columns, [column]).first
@@ -37,31 +48,31 @@ module ActiveMedian
               over = "PARTITION BY #{group_values.join(", ")}"
             end
 
-            select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+            select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
           else
             # if mysql gets native function, check (and memoize) version first
-            select(*group_values, "PERCENTILE_CONT(#{column}, #{percentile})")
+            select(*group_values, "PERCENTILE_CONT(#{column}, #{percentile}) AS #{column_alias}")
           end
         when /sqlserver/i
           if group_values.any?
             over = "PARTITION BY #{group_values.join(", ")}"
           end
 
-          select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over})").unscope(:group)
+          select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
         when /sqlite/i
           case percentile.to_f
           when 0
-            select(*group_values, "MIN(#{column})")
+            select(*group_values, "MIN(#{column}) AS #{column_alias}")
           when 0.5
-            select(*group_values, "MEDIAN(#{column})")
+            select(*group_values, "MEDIAN(#{column}) AS #{column_alias}")
           when 1
-            select(*group_values, "MAX(#{column})")
+            select(*group_values, "MAX(#{column}) AS #{column_alias}")
           else
             # LOWER_QUARTILE and UPPER_QUARTILE use different calculation than 0.25 and 0.75
             raise "SQLite only supports 0, 0.5, and 1 percentiles"
           end
         when /postg/i, /redshift/i # postgis too
-          select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column})")
+          select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) AS #{column_alias}")
         else
           raise "Connection adapter not supported: #{connection.adapter_name}"
         end

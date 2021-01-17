@@ -1,5 +1,6 @@
 ## 0.3.0 (unreleased)
 
+- Added column alias
 - Dropped support for Active Record < 5.2
 
 ## 0.2.8 (2021-01-16)
