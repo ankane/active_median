@@ -63,11 +63,10 @@ class PercentileTest < Minitest::Test
   def test_expression_no_arel
     skip if mongoid? || sqlite?
 
-    message = "[active_median] Non-attribute argument: visits_count + 1. Use Arel.sql() for known-safe values. This will raise an error in ActiveMedian 0.3.0\n"
-    _, stderr = capture_io do
+    error = assert_raises(ActiveRecord::UnknownAttributeReference) do
       User.percentile("visits_count + 1", 0.75)
     end
-    assert_match message, stderr
+    assert_equal "Query method called with non-attribute argument(s): \"visits_count + 1\". Use Arel.sql() for known-safe values.", error.message
   end
 
   def test_bad_column

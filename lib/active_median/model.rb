@@ -18,7 +18,7 @@ module ActiveMedian
       # symbol = column (safe), Arel node = SQL (safe), other = untrusted
       # matches table.column and column
       unless column.is_a?(Symbol) || column.is_a?(Arel::Nodes::SqlLiteral) || /\A\w+(\.\w+)?\z/i.match(column.to_s)
-        warn "[active_median] Non-attribute argument: #{column}. Use Arel.sql() for known-safe values. This will raise an error in ActiveMedian 0.3.0"
+        raise ActiveRecord::UnknownAttributeReference, "Query method called with non-attribute argument(s): #{column.inspect}. Use Arel.sql() for known-safe values."
       end
 
       column_alias = relation.send(:column_alias_for, "#{operation} #{column.to_s.downcase}")
