@@ -1,3 +1,7 @@
+## 0.2.8 (unreleased)
+
+- Fixed bug with removing order
+
 ## 0.2.7 (2021-01-16)
 
 - Fixed error with order

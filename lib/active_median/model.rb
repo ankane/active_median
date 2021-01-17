@@ -67,7 +67,7 @@ module ActiveMedian
         end
 
       # same as average
-      relation = relation.unscope(:order).distinct!(false) if relation.group_values.empty?
+      relation = relation.unscope(:order).distinct!(false) if group_values.empty?
 
       result = connection.select_all(relation.to_sql)
 
