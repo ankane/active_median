@@ -3,3 +3,7 @@ source "https://rubygems.org"
 gemspec path: ".."
 
 gem "mongoid", "~> 7"
+gem "minitest"
+gem "pg"
+gem "rake"
+gem "groupdate"

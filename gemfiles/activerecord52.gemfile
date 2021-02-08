@@ -3,3 +3,7 @@ source "https://rubygems.org"
 gemspec path: ".."
 
 gem "activerecord", "~> 5.2.0"
+gem "minitest"
+gem "pg"
+gem "rake"
+gem "groupdate"

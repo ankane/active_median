@@ -3,4 +3,7 @@ source "https://rubygems.org"
 gemspec path: ".."
 
 gem "activerecord", "~> 6.1.0"
+gem "minitest"
 gem "sqlite3"
+gem "rake"
+gem "groupdate"
