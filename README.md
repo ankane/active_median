@@ -44,19 +44,6 @@ Works with grouping, too
 Order.group(:store_id).median(:total)
 ```
 
-## User Input
-
-If passing user input as the column, be sure to sanitize it first [like you must](https://rails-sqli.org/) with other aggregate methods like `sum`.
-
-```ruby
-column = params[:column]
-
-# check against permitted columns
-raise "Unpermitted column" unless ["column_a", "column_b"].include?(column)
-
-User.median(column)
-```
-
 ## Arrays and Hashes
 
 Median
@@ -111,9 +98,15 @@ db.enable_load_extension(0)
 
 ## Upgrading
 
-### 0.2.0
+### 0.3.0
 
-A user-defined function is no longer needed for Postgres. Create a migration with `ActiveMedian.drop_function` to remove it.
+ActiveMedian 0.3.0 protects against unsafe input by default. For non-attribute arguments, use:
+
+```ruby
+Item.median(Arel.sql(known_safe_value))
+```
+
+Also, percentiles are now supported with SQLite. Use the [percentile extension](#sqlite) instead of `extension-functions`.
 
 ## Contributing
 

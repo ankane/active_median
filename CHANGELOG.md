@@ -1,4 +1,4 @@
-## 0.3.0 (unreleased)
+## 0.3.0 (2021-02-08)
 
 - Added column alias
 - Added support for percentiles with SQLite (switched extensions)
