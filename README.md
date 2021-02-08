@@ -94,7 +94,7 @@ mysql <options> < load.sql
 
 ### SQLite
 
-SQLite requires an extension that ships with SQLite. Download [percentile.c](https://www.sqlite.org/src/file?name=ext/misc/percentile.c&ci=d49c32e6e7cc341b) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform. On Mac, use:
+SQLite requires an extension. Download [percentile.c](https://www.sqlite.org/src/file?name=ext/misc/percentile.c&ci=d49c32e6e7cc341b) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform. On Mac, use:
 
 ```sh
 gcc -g -fPIC -dynamiclib -L/usr/local/opt/sqlite/lib -lsqlite3 percentile.c -o percentile.dylib
