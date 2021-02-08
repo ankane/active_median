@@ -1,6 +1,7 @@
 ## 0.3.0 (unreleased)
 
 - Added column alias
+- Added support for percentiles with SQLite (switched extensions)
 - Raise `ActiveRecord::UnknownAttributeReference` for non-attribute arguments
 - Dropped support for Active Record < 5.2
 

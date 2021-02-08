@@ -17,7 +17,7 @@ if sqlite?
   db = ActiveRecord::Base.connection.raw_connection
   db.enable_load_extension(1)
   ext = RbConfig::CONFIG["host_os"] =~ /darwin/i ? "dylib" : "so"
-  db.load_extension("/tmp/extension-functions.#{ext}")
+  db.load_extension("/tmp/percentile.#{ext}")
   db.enable_load_extension(0)
 end
 

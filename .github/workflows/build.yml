@@ -78,8 +78,8 @@ jobs:
     - if: ${{ matrix.sqlite }}
       run: |
         cd /tmp
-        wget -q -O extension-functions.c https://www.sqlite.org/contrib/download/extension-functions.c/download/extension-functions.c?get=25
-        gcc -g -fPIC -shared extension-functions.c -o extension-functions.so
+        wget -q -O percentile.c https://www.sqlite.org/src/raw/148dd07286b16e50f232bb638a47850085ad37d51f270429905bd865e595d1ca?at=percentile.c
+        gcc -g -fPIC -shared -lsqlite3 percentile.c -o percentile.so
 
     - if: ${{ matrix.sqlserver }}
       uses: ankane/setup-sqlserver@v1

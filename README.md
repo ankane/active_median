@@ -94,10 +94,10 @@ mysql <options> < load.sql
 
 ### SQLite
 
-SQLite requires a [community extension](https://www.sqlite.org/contrib). Download [extension-functions.c](https://www.sqlite.org/contrib/download/extension-functions.c) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform. On Mac, use:
+SQLite requires an extension that ships with SQLite. Download [percentile.c](https://www.sqlite.org/src/file?name=ext/misc/percentile.c&ci=d49c32e6e7cc341b) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform. On Mac, use:
 
 ```sh
-gcc -g -fPIC -dynamiclib extension-functions.c -o extension-functions.dylib
+gcc -g -fPIC -dynamiclib -L/usr/local/opt/sqlite/lib -lsqlite3 percentile.c -o percentile.dylib
 ```
 
 To load it in Rails, create an initializer with:
@@ -105,7 +105,7 @@ To load it in Rails, create an initializer with:
 ```ruby
 db = ActiveRecord::Base.connection.raw_connection
 db.enable_load_extension(1)
-db.load_extension("extension-functions.dylib")
+db.load_extension("percentile.dylib")
 db.enable_load_extension(0)
 ```
 
