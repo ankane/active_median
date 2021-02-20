@@ -1,3 +1,7 @@
+## 0.3.1 (unreleased)
+
+- Fixed error with certain `select` clauses
+
 ## 0.3.0 (2021-02-08)
 
 - Added column alias

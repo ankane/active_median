@@ -102,6 +102,15 @@ class MedianTest < Minitest::Test
     assert_equal 1, user.posts.median(:comments_count)
   end
 
+  def test_association_distinct_on
+    skip if mongoid?
+
+    user = User.create!
+    user.posts.create!(comments_count: 2)
+    user.posts.create!(comments_count: 3)
+    assert_equal 2.5, user.posts.select("DISTINCT ON (user_id) *").median(:comments_count)
+  end
+
   def test_references
     user = User.create!
     user.posts.create!(comments_count: 1)
