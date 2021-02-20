@@ -108,6 +108,7 @@ class MedianTest < Minitest::Test
     user = User.create!
     user.posts.create!(comments_count: 2)
     user.posts.create!(comments_count: 3)
+    assert_equal 2.5, user.posts.select("DISTINCT ON (user_id) *").average(:comments_count)
     assert_equal 2.5, user.posts.select("DISTINCT ON (user_id) *").median(:comments_count)
   end
 
