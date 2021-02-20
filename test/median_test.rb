@@ -55,6 +55,23 @@ class MedianTest < Minitest::Test
     assert_equal expected, User.group(:name).group(:visits_count).median(:rating)
   end
 
+  def test_select
+    skip if mongoid?
+
+    [1, 1, 2, 3, 4, 13].each { |n| User.create!(visits_count: n) }
+    assert_equal 4, User.select(:id).average(:visits_count)
+    assert_equal 2.5, User.select(:id).median(:visits_count)
+  end
+
+  def test_select_group
+    skip if mongoid?
+
+    [1, 2, 3, 4, 5, 6].each { |n| User.create!(visits_count: n, name: n < 4 ? "A" : "B") }
+    expected = {"A" => 2, "B" => 5}
+    assert_equal expected, User.select(:id).group(:name).average(:visits_count)
+    assert_equal expected, User.select(:id).group(:name).median(:visits_count)
+  end
+
   def test_order
     skip if mongoid?
 
@@ -100,16 +117,6 @@ class MedianTest < Minitest::Test
     user = User.create!
     user.posts.create!(comments_count: 1)
     assert_equal 1, user.posts.median(:comments_count)
-  end
-
-  def test_association_distinct_on
-    skip if mongoid?
-
-    user = User.create!
-    user.posts.create!(comments_count: 2)
-    user.posts.create!(comments_count: 3)
-    assert_equal 2.5, user.posts.select("DISTINCT ON (user_id) *").average(:comments_count)
-    assert_equal 2.5, user.posts.select("DISTINCT ON (user_id) *").median(:comments_count)
   end
 
   def test_references
