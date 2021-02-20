@@ -120,10 +120,13 @@ class MedianTest < Minitest::Test
   end
 
   def test_references
+    skip if mongoid?
+
     user = User.create!
     user.posts.create!(comments_count: 1)
     # see https://github.com/ankane/active_median/issues/9
     # use left_outer_joins(:posts) instead
+    assert_equal 1, User.includes(:posts).references(:posts).average(:comments_count)
     # assert_equal 1, User.includes(:posts).references(:posts).median(:comments_count)
   end
 
