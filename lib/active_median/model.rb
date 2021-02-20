@@ -39,7 +39,8 @@ module ActiveMedian
 
       group_values = all.group_values
 
-      # use reselect to match average behavior
+      # replace select to match behavior of average
+      relation = unscope(:select)
 
       relation =
         case connection.adapter_name
@@ -53,21 +54,21 @@ module ActiveMedian
               over = "PARTITION BY #{group_values.join(", ")}"
             end
 
-            reselect(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
+            relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
           else
             # if mysql gets native function, check (and memoize) version first
-            reselect(*group_values, "PERCENTILE_CONT(#{column}, #{percentile}) AS #{column_alias}")
+            relation.select(*group_values, "PERCENTILE_CONT(#{column}, #{percentile}) AS #{column_alias}")
           end
         when /sqlserver/i
           if group_values.any?
             over = "PARTITION BY #{group_values.join(", ")}"
           end
 
-          reselect(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
+          relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
         when /sqlite/i
-          reselect(*group_values, "PERCENTILE(#{column}, #{percentile} * 100) AS #{column_alias}")
+          relation.select(*group_values, "PERCENTILE(#{column}, #{percentile} * 100) AS #{column_alias}")
         when /postg/i, /redshift/i # postgis too
-          reselect(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) AS #{column_alias}")
+          relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) AS #{column_alias}")
         else
           raise "Connection adapter not supported: #{connection.adapter_name}"
         end
