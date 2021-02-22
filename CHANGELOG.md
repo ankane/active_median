@@ -1,6 +1,6 @@
-## 0.3.1 (unreleased)
+## 0.3.1 (2021-02-21)
 
-- Fixed error with certain `select` clauses
+- Fixed error with relations with `select` clauses
 
 ## 0.3.0 (2021-02-08)
 
