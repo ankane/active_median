@@ -21,17 +21,19 @@ if sqlite?
   db.enable_load_extension(0)
 end
 
-ActiveRecord::Migration.create_table :users, force: true do |t|
-  t.integer :visits_count
-  t.decimal :latitude, precision: 10, scale: 5
-  t.float :rating
-  t.string :name
-  t.datetime :created_at
-end
+ActiveRecord::Schema.define do
+  create_table :users, force: true do |t|
+    t.integer :visits_count
+    t.decimal :latitude, precision: 10, scale: 5
+    t.float :rating
+    t.string :name
+    t.datetime :created_at
+  end
 
-ActiveRecord::Migration.create_table :posts, force: true do |t|
-  t.references :user
-  t.integer :comments_count
+  create_table :posts, force: true do |t|
+    t.references :user
+    t.integer :comments_count
+  end
 end
 
 class User < ActiveRecord::Base
