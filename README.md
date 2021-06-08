@@ -6,7 +6,7 @@ Supports:
 
 - PostgreSQL 9.4+
 - MariaDB 10.3.3+
-- MySQL and SQL (with extensions)
+- MySQL and SQLite (with extensions)
 - SQL Server 2012+
 - MongoDB 2.1+
 
