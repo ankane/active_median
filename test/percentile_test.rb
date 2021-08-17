@@ -15,6 +15,20 @@ class PercentileTest < Minitest::Test
     assert_equal 29, User.percentile(:visits_count, 0.4)
   end
 
+  def test_empty
+    assert_nil User.percentile(:visits_count, 0.75)
+  end
+
+  def test_null
+    [1, 2, 3, 4, nil].each { |n| User.create!(visits_count: n) }
+    assert_in_delta 3.25, User.percentile(:visits_count, 0.75)
+  end
+
+  def test_all_null
+    [nil, nil, nil].each { |n| User.create!(visits_count: n) }
+    assert_nil User.percentile(:visits_count, 0.75)
+  end
+
   def test_zero
     [1, 2, 3, 4].each { |n| User.create!(visits_count: n) }
     assert_equal 1, User.percentile(:visits_count, 0)

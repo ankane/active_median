@@ -19,6 +19,16 @@ class MedianTest < Minitest::Test
     assert_nil User.median(:visits_count)
   end
 
+  def test_null
+    [1, 1, 2, 3, 4, 100, nil].each { |n| User.create!(visits_count: n) }
+    assert_equal 2.5, User.median(:visits_count)
+  end
+
+  def test_all_null
+    [nil, nil, nil].each { |n| User.create!(visits_count: n) }
+    assert_nil User.median(:visits_count)
+  end
+
   def test_decimal
     skip if sqlite? # unsure why
     6.times { |n| User.create!(latitude: n * 0.1) }
@@ -146,16 +156,6 @@ class MedianTest < Minitest::Test
     assert_raises(ActiveRecord::StatementInvalid) do
       User.median(:name)
     end
-  end
-
-  def test_null
-    [1, 1, 2, 3, 4, 100, nil].each { |n| User.create!(visits_count: n) }
-    assert_equal 2.5, User.median(:visits_count)
-  end
-
-  def test_all_null
-    [nil, nil, nil].each { |n| User.create!(visits_count: n) }
-    assert_nil User.median(:visits_count)
   end
 
   def test_array_even
