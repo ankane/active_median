@@ -148,6 +148,11 @@ class MedianTest < Minitest::Test
     end
   end
 
+  def test_null
+    [1, 1, 2, 3, 4, 100, nil].each { |n| User.create!(visits_count: n) }
+    assert_equal 2.5, User.median(:visits_count)
+  end
+
   def test_array_even
     assert_equal 2.5, [1, 1, 2, 3, 4, 100].median
   end

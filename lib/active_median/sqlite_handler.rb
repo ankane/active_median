@@ -18,6 +18,7 @@ module ActiveMedian
     # 2. percentile same for all rows
     # since input is already checked
     def step(ctx, value, percentile)
+      return if value.nil?
       raise ActiveRecord::StatementInvalid, "1st argument to percentile() is not numeric" unless value.is_a?(Numeric)
       @percentile ||= percentile
       @values << value

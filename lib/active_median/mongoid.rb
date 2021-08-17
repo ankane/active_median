@@ -11,6 +11,7 @@ module ActiveMedian
 
       relation =
         all
+        .where(column => {"$ne" => nil})
         .asc(column)
         .group(_id: nil, values: {"$push" => "$#{column}"}, count: {"$sum" => 1})
         .project(values: 1, count: {"$subtract" => ["$count", 1]})
