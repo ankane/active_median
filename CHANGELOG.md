@@ -1,4 +1,4 @@
-## 0.3.2 (unreleased)
+## 0.3.2 (2021-08-16)
 
 - Added support for SQLite without an extension
 
