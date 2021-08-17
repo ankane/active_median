@@ -66,6 +66,15 @@ module ActiveMedian
 
           relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
         when /sqlite/i
+          db = connection.raw_connection
+          unless db.instance_variable_get(:@active_median)
+            if db.get_first_value("SELECT 1 FROM pragma_function_list WHERE name = 'percentile'").nil?
+              require "active_median/sqlite_handler"
+              db.create_aggregate_handler(ActiveMedian::SQLiteHandler)
+            end
+            db.instance_variable_set(:@active_median, true)
+          end
+
           relation.select(*group_values, "PERCENTILE(#{column}, #{percentile} * 100) AS #{column_alias}")
         when /postg/i, /redshift/i # postgis too
           relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) AS #{column_alias}")

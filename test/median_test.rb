@@ -138,6 +138,13 @@ class MedianTest < Minitest::Test
     assert_kind_of Date, result.keys.first
   end
 
+  def test_non_numeric
+    User.create!(name: 'A')
+    assert_raises(ActiveRecord::StatementInvalid) do
+      User.median(:name)
+    end
+  end
+
   def test_array_even
     assert_equal 2.5, [1, 1, 2, 3, 4, 100].median
   end

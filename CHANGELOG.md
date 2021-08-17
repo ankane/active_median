@@ -1,3 +1,7 @@
+## 0.3.2 (unreleased)
+
+- Added support for SQLite without an extension
+
 ## 0.3.1 (2021-02-21)
 
 - Fixed error with relations with `select` clauses

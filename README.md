@@ -5,8 +5,9 @@ Median and percentile for Active Record, Mongoid, arrays, and hashes
 Supports:
 
 - PostgreSQL 9.4+
+- SQLite 3
 - MariaDB 10.3.3+
-- MySQL and SQLite (with extensions)
+- MySQL (with an extension)
 - SQL Server 2012+
 - MongoDB 2.1+
 
@@ -22,7 +23,7 @@ Add this line to your application’s Gemfile:
 gem 'active_median'
 ```
 
-For MySQL and SQLite, also follow [these instructions](#additional-instructions).
+For MySQL, also follow [these instructions](#additional-instructions).
 
 ## Models
 
@@ -81,7 +82,7 @@ mysql <options> < load.sql
 
 ### SQLite
 
-SQLite requires an extension. Download [percentile.c](https://www.sqlite.org/src/file?name=ext/misc/percentile.c&ci=d49c32e6e7cc341b) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform.
+Improve performance with SQLite with an extension. Download [percentile.c](https://www.sqlite.org/src/file?name=ext/misc/percentile.c&ci=d49c32e6e7cc341b) and follow the [instructions for compiling loadable extensions](https://www.sqlite.org/loadext.html#compiling_a_loadable_extension) for your platform.
 
 On Linux, use:
 
