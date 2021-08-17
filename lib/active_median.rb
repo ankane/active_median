@@ -4,6 +4,7 @@ require "active_median/enumerable"
 require "active_median/version"
 
 module ActiveMedian
+  # TODO remove in 0.4.0
   def self.drop_function
     ActiveRecord::Base.connection.execute <<-SQL
       DROP AGGREGATE IF EXISTS median(anyelement);
