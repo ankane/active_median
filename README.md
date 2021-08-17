@@ -4,12 +4,12 @@ Median and percentile for Active Record, Mongoid, arrays, and hashes
 
 Supports:
 
-- PostgreSQL 9.4+
-- SQLite 3
-- MariaDB 10.3.3+
+- PostgreSQL
+- SQLite
+- MariaDB
 - MySQL (with an extension)
-- SQL Server 2012+
-- MongoDB 2.1+
+- SQL Server
+- MongoDB
 
 :fire: Uses native functions for blazing performance
 
