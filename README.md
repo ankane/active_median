@@ -133,6 +133,22 @@ git clone https://github.com/ankane/active_median.git
 cd active_median
 bundle install
 
+# Postgres
 createdb active_median_test
 bundle exec rake test
+
+# SQLite
+ADAPTER=sqlite3 BUNDLE_GEMFILE=gemfiles/sqlite3.gemfile bundle exec rake test
+
+# MariaDB and MySQL (for MySQL, install the extension first)
+mysqladmin create active_median_test
+ADAPTER=mysql2 BUNDLE_GEMFILE=gemfiles/mysql2.gemfile bundle exec rake test
+
+# SQL Server
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=YourStrong!Passw0rd' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+docker exec -it <container-id> /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P YourStrong\!Passw0rd -Q "CREATE DATABASE active_median_test"
+ADAPTER=sqlserver BUNDLE_GEMFILE=gemfiles/sqlserver.gemfile bundle exec rake test
+
+# MongoDB
+BUNDLE_GEMFILE=gemfiles/mongoid7.gemfile bundle exec rake test
 ```
