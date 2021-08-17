@@ -1,4 +1,4 @@
-## 0.3.3 (unreleased)
+## 0.3.3 (2021-08-17)
 
 - Fixed null values for SQLite without an extension and MongoDB
 
