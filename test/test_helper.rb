@@ -18,6 +18,10 @@ def mongoid?
   defined?(Mongoid)
 end
 
+def approximate?
+  !!ENV["APPROXIMATE"]
+end
+
 if mongoid?
   require_relative "support/mongoid"
 else

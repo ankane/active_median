@@ -22,6 +22,8 @@ if sqlite? && File.exist?("/tmp/percentile.#{ext}")
 end
 
 ActiveRecord::Schema.define do
+  enable_extension "tdigest" if approximate?
+
   create_table :users, force: true do |t|
     t.integer :visits_count
     t.decimal :latitude, precision: 10, scale: 5

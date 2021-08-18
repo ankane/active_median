@@ -13,11 +13,11 @@ module Enumerable
   end
 
   unless method_defined?(:percentile)
-    def percentile(*args, &block)
+    def percentile(*args, **options, &block)
       if !block && respond_to?(:scoping)
-        scoping { @klass.percentile(*args) }
+        scoping { @klass.percentile(*args, **options) }
       elsif !block && respond_to?(:with_scope)
-        with_scope(self) { klass.percentile(*args) }
+        with_scope(self) { klass.percentile(*args, **options) }
       else
         raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 1)" if args.size != 1
 

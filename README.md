@@ -45,6 +45,32 @@ Works with grouping, too
 Order.group(:store_id).median(:total)
 ```
 
+### Approximate Calculations [unreleased]
+
+Speed up calculations for Postgres with the [t-digest](https://github.com/tvondra/tdigest) extension.
+
+Install the extension
+
+```sh
+cd /tmp
+git clone https://github.com/tvondra/tdigest.git
+cd tdigest
+make
+make install # may need sudo
+```
+
+Create a migration to enable the extension
+
+```ruby
+enable_extension "tdigest"
+```
+
+And query away
+
+```ruby
+Request.percentile(:response_time, 0.95, approximate: true)
+```
+
 ## Arrays and Hashes
 
 Median

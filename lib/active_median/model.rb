@@ -1,16 +1,16 @@
 module ActiveMedian
   module Model
-    def median(column)
-      calculate_percentile(column, 0.5, "median")
+    def median(column, approximate: false)
+      calculate_percentile(column, 0.5, "median", approximate)
     end
 
-    def percentile(column, percentile)
-      calculate_percentile(column, percentile, "percentile")
+    def percentile(column, percentile, approximate: false)
+      calculate_percentile(column, percentile, "percentile", approximate)
     end
 
     private
 
-    def calculate_percentile(column, percentile, operation)
+    def calculate_percentile(column, percentile, operation, approximate)
       percentile = percentile.to_f
       raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
 
@@ -42,45 +42,55 @@ module ActiveMedian
       # replace select to match behavior of average
       relation = unscope(:select)
 
-      relation =
-        case connection.adapter_name
-        when /mysql/i
-          # assume mariadb by default
-          # use send as this method is private in Rails 4.2
-          mariadb = connection.send(:mariadb?) rescue true
+      if approximate
+        relation =
+          case connection.adapter_name
+          when /postg/i
+            relation.select(*group_values, "tdigest_percentile(#{column}, 100, #{percentile}) AS #{column_alias}")
+          else
+            raise "Connection adapter does not support approximate: #{connection.adapter_name}"
+          end
+      else
+        relation =
+          case connection.adapter_name
+          when /mysql/i
+            # assume mariadb by default
+            # use send as this method is private in Rails 4.2
+            mariadb = connection.send(:mariadb?) rescue true
 
-          if mariadb
+            if mariadb
+              if group_values.any?
+                over = "PARTITION BY #{group_values.join(", ")}"
+              end
+
+              relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
+            else
+              # if mysql gets native function, check (and memoize) version first
+              relation.select(*group_values, "PERCENTILE_CONT(#{column}, #{percentile}) AS #{column_alias}")
+            end
+          when /sqlserver/i
             if group_values.any?
               over = "PARTITION BY #{group_values.join(", ")}"
             end
 
             relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
-          else
-            # if mysql gets native function, check (and memoize) version first
-            relation.select(*group_values, "PERCENTILE_CONT(#{column}, #{percentile}) AS #{column_alias}")
-          end
-        when /sqlserver/i
-          if group_values.any?
-            over = "PARTITION BY #{group_values.join(", ")}"
-          end
-
-          relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) OVER (#{over}) AS #{column_alias}").unscope(:group)
-        when /sqlite/i
-          db = connection.raw_connection
-          unless db.instance_variable_get(:@active_median)
-            if db.get_first_value("SELECT 1 FROM pragma_function_list WHERE name = 'percentile'").nil?
-              require "active_median/sqlite_handler"
-              db.create_aggregate_handler(ActiveMedian::SQLiteHandler)
+          when /sqlite/i
+            db = connection.raw_connection
+            unless db.instance_variable_get(:@active_median)
+              if db.get_first_value("SELECT 1 FROM pragma_function_list WHERE name = 'percentile'").nil?
+                require "active_median/sqlite_handler"
+                db.create_aggregate_handler(ActiveMedian::SQLiteHandler)
+              end
+              db.instance_variable_set(:@active_median, true)
             end
-            db.instance_variable_set(:@active_median, true)
-          end
 
-          relation.select(*group_values, "PERCENTILE(#{column}, #{percentile} * 100) AS #{column_alias}")
-        when /postg/i, /redshift/i # postgis too
-          relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) AS #{column_alias}")
-        else
-          raise "Connection adapter not supported: #{connection.adapter_name}"
-        end
+            relation.select(*group_values, "PERCENTILE(#{column}, #{percentile} * 100) AS #{column_alias}")
+          when /postg/i, /redshift/i # postgis too
+            relation.select(*group_values, "PERCENTILE_CONT(#{percentile}) WITHIN GROUP (ORDER BY #{column}) AS #{column_alias}")
+          else
+            raise "Connection adapter not supported: #{connection.adapter_name}"
+          end
+      end
 
       # same as average
       relation = relation.unscope(:order).distinct!(false) if group_values.empty?
