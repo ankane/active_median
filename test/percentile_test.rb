@@ -45,6 +45,8 @@ class PercentileTest < Minitest::Test
   end
 
   def test_group
+    skip if mongoid?
+
     [1, 2, 3, 4, 15, 20, 35, 40, 50].each { |n| User.create!(visits_count: n, name: n <= 4 ? "A" : "B") }
     expected = {"A" => 3.25, "B" => 40}
     assert_equal expected, User.group(:name).percentile(:visits_count, 0.75)
