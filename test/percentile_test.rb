@@ -44,6 +44,12 @@ class PercentileTest < Minitest::Test
     assert_in_delta 95.2, User.percentile(:visits_count, 0.99)
   end
 
+  def test_group
+    [1, 2, 3, 4, 15, 20, 35, 40, 50].each { |n| User.create!(visits_count: n, name: n <= 4 ? "A" : "B") }
+    expected = {"A" => 3.25, "B" => 40}
+    assert_equal expected, User.group(:name).percentile(:visits_count, 0.75)
+  end
+
   def test_order
     skip if mongoid?
 
