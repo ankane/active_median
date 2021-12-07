@@ -11,6 +11,9 @@ jobs:
         - ruby: 3.0
           gemfile: Gemfile
           postgres: true
+        - ruby: 3.0
+          gemfile: gemfiles/activerecord70.gemfile
+          postgres: true
         - ruby: 2.7
           gemfile: gemfiles/activerecord60.gemfile
           postgres: true
