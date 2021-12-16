@@ -2,7 +2,6 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -12,7 +11,7 @@ jobs:
           gemfile: Gemfile
           postgres: true
         - ruby: 3.0
-          gemfile: gemfiles/activerecord70.gemfile
+          gemfile: gemfiles/activerecord61.gemfile
           postgres: true
         - ruby: 2.7
           gemfile: gemfiles/activerecord60.gemfile
