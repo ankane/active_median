@@ -28,10 +28,10 @@ jobs:
           adapter: mysql2
           mysql: true
         - ruby: 3.1
-          gemfile: gemfiles/mongoid7.gemfile
-          mongodb: true
-        - ruby: 3.1
           gemfile: gemfiles/mongoid8.gemfile
+          mongodb: true
+        - ruby: "3.0"
+          gemfile: gemfiles/mongoid7.gemfile
           mongodb: true
         - ruby: 3.1
           gemfile: gemfiles/sqlite3.gemfile
