@@ -20,7 +20,7 @@ Supports:
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'active_median'
+gem "active_median"
 ```
 
 For MySQL, also follow [these instructions](#additional-instructions).
