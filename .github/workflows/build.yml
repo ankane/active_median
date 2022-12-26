@@ -2,101 +2,104 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
         include:
-        - ruby: 3.1
-          gemfile: Gemfile
-          postgres: true
-        - ruby: "3.0"
-          gemfile: gemfiles/activerecord61.gemfile
-          postgres: true
-        - ruby: 2.7
-          gemfile: gemfiles/activerecord60.gemfile
-          postgres: true
-        - ruby: 2.6
-          gemfile: gemfiles/activerecord52.gemfile
-          postgres: true
-        - ruby: 3.1
-          gemfile: gemfiles/mysql2.gemfile
-          adapter: mysql2
-          mariadb: true
-        - ruby: 3.1
-          gemfile: gemfiles/mysql2.gemfile
-          adapter: mysql2
-          mysql: true
-        - ruby: 3.1
-          gemfile: gemfiles/mongoid8.gemfile
-          mongodb: true
-        - ruby: "3.0"
-          gemfile: gemfiles/mongoid7.gemfile
-          mongodb: true
-        - ruby: 3.1
-          gemfile: gemfiles/sqlite3.gemfile
-          adapter: sqlite3
-        - ruby: 3.1
-          gemfile: gemfiles/sqlite3.gemfile
-          adapter: sqlite3
-          sqlite: true
-        - ruby: 3.1
-          gemfile: gemfiles/sqlserver.gemfile
-          adapter: sqlserver
-          sqlserver: true
+          - ruby: 3.2
+            gemfile: Gemfile
+            postgres: true
+          - ruby: 3.1
+            gemfile: Gemfile
+            postgres: true
+          - ruby: "3.0"
+            gemfile: gemfiles/activerecord61.gemfile
+            postgres: true
+          - ruby: 2.7
+            gemfile: gemfiles/activerecord60.gemfile
+            postgres: true
+          - ruby: 2.6
+            gemfile: gemfiles/activerecord52.gemfile
+            postgres: true
+          - ruby: 3.1
+            gemfile: gemfiles/mysql2.gemfile
+            adapter: mysql2
+            mariadb: true
+          - ruby: 3.1
+            gemfile: gemfiles/mysql2.gemfile
+            adapter: mysql2
+            mysql: true
+          - ruby: 3.1
+            gemfile: gemfiles/mongoid8.gemfile
+            mongodb: true
+          - ruby: "3.0"
+            gemfile: gemfiles/mongoid7.gemfile
+            mongodb: true
+          - ruby: 3.1
+            gemfile: gemfiles/sqlite3.gemfile
+            adapter: sqlite3
+          - ruby: 3.1
+            gemfile: gemfiles/sqlite3.gemfile
+            adapter: sqlite3
+            sqlite: true
+          - ruby: 3.1
+            gemfile: gemfiles/sqlserver.gemfile
+            adapter: sqlserver
+            sqlserver: true
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - if: ${{ matrix.sqlserver }}
-      run: sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc
+      - if: ${{ matrix.sqlserver }}
+        run: sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc
 
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
 
-    - if: ${{ matrix.postgres }}
-      uses: ankane/setup-postgres@v1
-      with:
-        database: active_median_test
+      - if: ${{ matrix.postgres }}
+        uses: ankane/setup-postgres@v1
+        with:
+          database: active_median_test
 
-    - if: ${{ matrix.mariadb }}
-      uses: ankane/setup-mariadb@v1
-      with:
-        database: active_median_test
+      - if: ${{ matrix.mariadb }}
+        uses: ankane/setup-mariadb@v1
+        with:
+          database: active_median_test
 
-    - if: ${{ matrix.mysql }}
-      uses: ankane/setup-mysql@v1
-      with:
-        database: active_median_test
-    - if: ${{ matrix.mysql }}
-      run: |
-        cd /tmp
-        git clone https://github.com/infusion/udf_infusion.git
-        cd udf_infusion
-        ./configure --enable-functions="percentile_cont"
-        make
-        sudo make install
-        mysql -uroot < load.sql
+      - if: ${{ matrix.mysql }}
+        uses: ankane/setup-mysql@v1
+        with:
+          database: active_median_test
+      - if: ${{ matrix.mysql }}
+        run: |
+          cd /tmp
+          git clone https://github.com/infusion/udf_infusion.git
+          cd udf_infusion
+          ./configure --enable-functions="percentile_cont"
+          make
+          sudo make install
+          mysql -uroot < load.sql
 
-    - if: ${{ matrix.mongodb }}
-      uses: ankane/setup-mongodb@v1
+      - if: ${{ matrix.mongodb }}
+        uses: ankane/setup-mongodb@v1
 
-    - if: ${{ matrix.sqlite }}
-      run: |
-        cd /tmp
-        wget -q -O percentile.c https://www.sqlite.org/src/raw/148dd07286b16e50f232bb638a47850085ad37d51f270429905bd865e595d1ca?at=percentile.c
-        gcc -g -fPIC -shared -lsqlite3 percentile.c -o percentile.so
+      - if: ${{ matrix.sqlite }}
+        run: |
+          cd /tmp
+          wget -q -O percentile.c https://www.sqlite.org/src/raw/148dd07286b16e50f232bb638a47850085ad37d51f270429905bd865e595d1ca?at=percentile.c
+          gcc -g -fPIC -shared -lsqlite3 percentile.c -o percentile.so
 
-    - if: ${{ matrix.sqlserver }}
-      uses: ankane/setup-sqlserver@v1
-      with:
-        accept-eula: true
-    - if: ${{ matrix.sqlserver }}
-      run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -Q 'CREATE DATABASE active_median_test'
+      - if: ${{ matrix.sqlserver }}
+        uses: ankane/setup-sqlserver@v1
+        with:
+          accept-eula: true
+      - if: ${{ matrix.sqlserver }}
+        run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -Q 'CREATE DATABASE active_median_test'
 
-    - run: bundle exec rake test
-      env:
-        ADAPTER: ${{ matrix.adapter || 'postgresql' }}
+      - run: bundle exec rake test
+        env:
+          ADAPTER: ${{ matrix.adapter || 'postgresql' }}
