@@ -24,7 +24,8 @@ module ActiveMedian
         end
       end
 
-      column_alias = relation.send(:column_alias_for, "#{operation} #{column.to_s.downcase}")
+      column_alias_tracker = ActiveRecord::Calculations::ColumnAliasTracker.new(connection)
+      column_alias = column_alias_tracker.alias_for("#{operation} #{column.to_s.downcase}")
       # safety check
       # could quote, but want to keep consistent with Active Record
       raise "Bad column alias: #{column_alias}. Please report a bug." unless column_alias =~ /\A[a-z0-9_]+\z/
