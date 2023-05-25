@@ -1,4 +1,4 @@
-## 0.4.0 (unreleased)
+## 0.4.0 (2023-05-25)
 
 - Fixed error with Active Record 7.0.5
 - Raise `ArgumentError` for invalid percentiles
