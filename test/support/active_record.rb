@@ -2,7 +2,7 @@ require "active_record"
 require "groupdate"
 
 if adapter == "sqlserver"
-  # https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017
+  # https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16
   ActiveRecord::Base.establish_connection "sqlserver://SA:YourStrong!Passw0rd@localhost:1433/active_median_test"
 elsif adapter == "redshift"
   ActiveRecord::Base.establish_connection ENV["DATABASE_URL"]
