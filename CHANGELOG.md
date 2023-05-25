@@ -1,3 +1,7 @@
+## 0.4.0 (unreleased)
+
+- Fixed error with Active Record 7.0.5
+
 ## 0.3.3 (2021-08-17)
 
 - Fixed null values for SQLite without an extension and MongoDB
