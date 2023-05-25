@@ -1,6 +1,7 @@
 ## 0.4.0 (unreleased)
 
 - Fixed error with Active Record 7.0.5
+- Raise `ArgumentError` for invalid percentiles
 - Dropped support for Ruby < 3 and Active Record < 6.1
 
 ## 0.3.3 (2021-08-17)

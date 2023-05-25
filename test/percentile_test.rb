@@ -86,11 +86,20 @@ class PercentileTest < Minitest::Test
     assert_equal "Query method called with non-attribute argument(s): \"visits_count + 1\". Use Arel.sql() for known-safe values.", error.message
   end
 
-  def test_bad_column
+  def test_bad_percentile_string
     [1, 1, 2, 3, 4, 100].each { |n| User.create!(visits_count: n) }
-    # prevents injection, returns 0th percentile
-    # TODO throw error?
-    assert_equal 1, User.percentile(:visits_count, "bad")
+    error = assert_raises(ArgumentError) do
+      User.percentile(:visits_count, "bad")
+    end
+    assert_equal "invalid percentile", error.message
+  end
+
+  def test_bad_percentile_nil
+    [1, 1, 2, 3, 4, 100].each { |n| User.create!(visits_count: n) }
+    error = assert_raises(ArgumentError) do
+      User.percentile(:visits_count, nil)
+    end
+    assert_equal "invalid percentile", error.message
   end
 
   def test_bad_percentile

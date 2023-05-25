@@ -11,7 +11,8 @@ module ActiveMedian
     private
 
     def calculate_percentile(column, percentile, operation)
-      percentile = percentile.to_f
+      percentile = Float(percentile, exception: false)
+      raise ArgumentError, "invalid percentile" if percentile.nil?
       raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
 
       # basic version of Active Record disallow_raw_sql!

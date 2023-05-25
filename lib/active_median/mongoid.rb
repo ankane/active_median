@@ -6,7 +6,8 @@ module ActiveMedian
 
     # https://www.compose.com/articles/mongo-metrics-finding-a-happy-median/
     def percentile(column, percentile)
-      percentile = percentile.to_f
+      percentile = Float(percentile, exception: false)
+      raise ArgumentError, "invalid percentile" if percentile.nil?
       raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
 
       relation =
