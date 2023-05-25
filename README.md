@@ -105,18 +105,6 @@ db.load_extension("percentile.so") # or percentile.dylib
 db.enable_load_extension(0)
 ```
 
-## Upgrading
-
-### 0.3.0
-
-ActiveMedian 0.3.0 protects against unsafe input by default. For non-attribute arguments, use:
-
-```ruby
-Item.median(Arel.sql(known_safe_value))
-```
-
-Also, percentiles are now supported with SQLite. Use the [percentile extension](#sqlite) instead of `extension-functions`.
-
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
