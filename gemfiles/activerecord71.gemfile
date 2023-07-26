@@ -1,0 +1,9 @@
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "activerecord", github: "rails/rails"
+gem "minitest"
+gem "pg"
+gem "rake"
+gem "groupdate"
