@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec path: ".."
 
-gem "activerecord", github: "rails/rails"
+gem "activerecord", "7.1.0.beta1"
 gem "minitest"
 gem "pg"
 gem "rake"
