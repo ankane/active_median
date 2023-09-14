@@ -25,6 +25,10 @@ jobs:
             adapter: mysql2
             mysql: true
           - ruby: 3.1
+            gemfile: gemfiles/trilogy.gemfile
+            adapter: trilogy
+            mysql: true
+          - ruby: 3.1
             gemfile: gemfiles/mongoid8.gemfile
             mongodb: true
           - ruby: "3.0"

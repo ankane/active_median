@@ -51,7 +51,7 @@ module ActiveMedian
 
       relation =
         case connection.adapter_name
-        when /mysql/i
+        when /mysql/i, /trilogy/i
           # assume mariadb by default
           # use send as this method is private in Rails 4.2
           mariadb = connection.send(:mariadb?) rescue true

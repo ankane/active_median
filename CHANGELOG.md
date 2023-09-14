@@ -1,3 +1,7 @@
+## 0.4.1 (unreleased)
+
+- Added support for Trilogy
+
 ## 0.4.0 (2023-05-25)
 
 - Fixed error with Active Record 7.0.5

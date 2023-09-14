@@ -150,7 +150,7 @@ class MedianTest < Minitest::Test
 
   def test_non_numeric
     # TODO debug mysql
-    skip if adapter == "mysql2" || mongoid?
+    skip if adapter == "mysql2" || adapter == "trilogy" || mongoid?
 
     User.create!(name: 'A')
     assert_raises(ActiveRecord::StatementInvalid) do

@@ -1,0 +1,9 @@
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "activerecord", "~> 7.0.0"
+gem "minitest"
+gem "activerecord-trilogy-adapter"
+gem "rake"
+gem "groupdate", github: "ankane/groupdate"
