@@ -2,8 +2,8 @@ source "https://rubygems.org"
 
 gemspec path: ".."
 
-gem "activerecord", "~> 7.0.0"
+gem "activerecord", "~> 7.1.0"
 gem "minitest"
-gem "activerecord-trilogy-adapter"
+gem "trilogy"
 gem "rake"
 gem "groupdate", ">= 6.4"
