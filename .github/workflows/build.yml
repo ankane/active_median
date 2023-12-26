@@ -16,39 +16,39 @@ jobs:
           - ruby: "3.0"
             gemfile: gemfiles/activerecord61.gemfile
             postgres: true
-          - ruby: 3.1
+          - ruby: 3.3
             gemfile: gemfiles/mysql2.gemfile
             adapter: mysql2
             mariadb: true
-          - ruby: 3.1
+          - ruby: 3.3
             gemfile: gemfiles/mysql2.gemfile
             adapter: mysql2
             mysql: true
-          - ruby: 3.1
+          - ruby: 3.3
             gemfile: gemfiles/trilogy.gemfile
             adapter: trilogy
             mysql: true
-          - ruby: 3.1
+          - ruby: 3.3
             gemfile: gemfiles/mongoid8.gemfile
             mongodb: true
           - ruby: "3.0"
             gemfile: gemfiles/mongoid7.gemfile
             mongodb: true
-          - ruby: 3.1
+          - ruby: 3.3
             gemfile: gemfiles/sqlite3.gemfile
             adapter: sqlite3
-          - ruby: 3.1
+          - ruby: 3.3
             gemfile: gemfiles/sqlite3.gemfile
             adapter: sqlite3
             sqlite: true
-          - ruby: 3.1
+          - ruby: 3.3
             gemfile: gemfiles/sqlserver.gemfile
             adapter: sqlserver
             sqlserver: true
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - if: ${{ matrix.sqlserver }}
         run: sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc
