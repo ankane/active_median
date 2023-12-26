@@ -41,7 +41,7 @@ jobs:
             gemfile: gemfiles/sqlite3.gemfile
             adapter: sqlite3
             sqlite: true
-          - ruby: 3.3
+          - ruby: 3.1
             gemfile: gemfiles/sqlserver.gemfile
             adapter: sqlserver
             sqlserver: true
