@@ -13,7 +13,7 @@ Supports:
 
 :fire: Uses native functions for blazing performance
 
-[![Build Status](https://github.com/ankane/active_median/workflows/build/badge.svg?branch=master)](https://github.com/ankane/active_median/actions)
+[![Build Status](https://github.com/ankane/active_median/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/active_median/actions)
 
 ## Getting Started
 
