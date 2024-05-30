@@ -4,6 +4,4 @@ gemspec path: ".."
 
 gem "mongoid", "~> 8"
 gem "minitest"
-gem "pg"
 gem "rake"
-gem "groupdate"
