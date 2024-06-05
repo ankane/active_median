@@ -2,7 +2,7 @@ module Enumerable
   unless method_defined?(:median)
     def median(*args, &block)
       if !block && respond_to?(:scoping)
-        scoping { @klass.median(*args) }
+        scoping { klass.median(*args) }
       elsif !block && respond_to?(:with_scope)
         with_scope(self) { klass.median(*args) }
       else
@@ -15,7 +15,7 @@ module Enumerable
   unless method_defined?(:percentile)
     def percentile(*args, &block)
       if !block && respond_to?(:scoping)
-        scoping { @klass.percentile(*args) }
+        scoping { klass.percentile(*args) }
       elsif !block && respond_to?(:with_scope)
         with_scope(self) { klass.percentile(*args) }
       else
