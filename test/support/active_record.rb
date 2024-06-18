@@ -20,7 +20,7 @@ end
 ActiveRecord::Base.logger = $logger
 ActiveRecord::Migration.verbose = ENV["VERBOSE"]
 
-ext = RbConfig::CONFIG["host_os"] =~ /darwin/i ? "dylib" : "so"
+ext = RbConfig::CONFIG["host_os"].match?(/darwin/i) ? "dylib" : "so"
 if sqlite? && File.exist?("/tmp/percentile.#{ext}")
   db = ActiveRecord::Base.connection.raw_connection
   db.enable_load_extension(1)

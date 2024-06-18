@@ -20,7 +20,7 @@ module ActiveMedian
       # matches table.column and column
       unless column.is_a?(Symbol) || column.is_a?(Arel::Nodes::SqlLiteral)
         column = column.to_s
-        unless /\A\w+(\.\w+)?\z/i.match(column)
+        unless /\A\w+(\.\w+)?\z/i.match?(column)
           raise ActiveRecord::UnknownAttributeReference, "Query method called with non-attribute argument(s): #{column.inspect}. Use Arel.sql() for known-safe values."
         end
       end
@@ -34,7 +34,7 @@ module ActiveMedian
         end
       # safety check
       # could quote, but want to keep consistent with Active Record
-      raise "Bad column alias: #{column_alias}. Please report a bug." unless column_alias =~ /\A[a-z0-9_]+\z/
+      raise "Bad column alias: #{column_alias}. Please report a bug." unless /\A[a-z0-9_]+\z/.match?(column_alias)
 
       # column resolution
       node = relation.send(:arel_columns, [column]).first
