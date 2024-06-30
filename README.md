@@ -105,6 +105,10 @@ db.load_extension("percentile.so") # or percentile.dylib
 db.enable_load_extension(0)
 ```
 
+## History
+
+View the [changelog](https://github.com/ankane/active_median/blob/master/CHANGELOG.md)
+
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
