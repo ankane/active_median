@@ -23,3 +23,7 @@ if mongoid?
 else
   require_relative "support/active_record"
 end
+
+if ActiveSupport::VERSION::STRING.to_f == 7.2
+  ActiveSupport.to_time_preserves_timezone = true
+end
