@@ -179,4 +179,15 @@ class MedianTest < Minitest::Test
   def test_hash_block
     assert_equal 2.5, {a: 1, b: 1, c: 2, d: 3, e: 4, f: 100}.median { |k, v| v }
   end
+
+  def test_connection_leasing
+    skip if mongoid?
+
+    ActiveRecord::Base.connection_handler.clear_active_connections!
+    assert_nil ActiveRecord::Base.connection_pool.active_connection?
+    ActiveRecord::Base.connection_pool.with_connection do
+      User.median(:visits_count)
+    end
+    assert_nil ActiveRecord::Base.connection_pool.active_connection?
+  end
 end

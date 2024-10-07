@@ -1,16 +1,20 @@
 module ActiveMedian
   module Model
     def median(column)
-      calculate_percentile(column, 0.5, "median")
+      connection_pool.with_connection do |connection|
+        calculate_percentile(column, 0.5, "median", connection)
+      end
     end
 
     def percentile(column, percentile)
-      calculate_percentile(column, percentile, "percentile")
+      connection_pool.with_connection do |connection|
+        calculate_percentile(column, percentile, "percentile", connection)
+      end
     end
 
     private
 
-    def calculate_percentile(column, percentile, operation)
+    def calculate_percentile(column, percentile, operation, connection)
       percentile = Float(percentile, exception: false)
       raise ArgumentError, "invalid percentile" if percentile.nil?
       raise ArgumentError, "percentile is not between 0 and 1" if percentile < 0 || percentile > 1
@@ -39,7 +43,7 @@ module ActiveMedian
       # column resolution
       node = relation.send(:arel_columns, [column]).first
       node = Arel::Nodes::SqlLiteral.new(node) if node.is_a?(String)
-      column = relation.connection.visitor.accept(node, Arel::Collectors::SQLString.new).value
+      column = connection.visitor.accept(node, Arel::Collectors::SQLString.new).value
 
       # prevent SQL injection
       percentile = connection.quote(percentile)
