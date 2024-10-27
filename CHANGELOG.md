@@ -95,4 +95,8 @@ Breaking
 
 ## 0.1.0 (2014-03-13)
 
+- Added support for Active Record 4
+
+## 0.0.1 (2013-08-03)
+
 - First release
