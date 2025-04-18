@@ -7,11 +7,6 @@ if adapter == "sqlserver"
 elsif adapter == "redshift"
   ActiveRecord::Base.establish_connection ENV["DATABASE_URL"]
 elsif adapter == "trilogy"
-  if ActiveRecord::VERSION::STRING.to_f < 7.1
-    require "trilogy_adapter/connection"
-    ActiveRecord::Base.public_send :extend, TrilogyAdapter::Connection
-  end
-
   ActiveRecord::Base.establish_connection adapter: adapter, database: "active_median_test", host: "127.0.0.1"
 else
   ActiveRecord::Base.establish_connection adapter: adapter, database: sqlite? ? ":memory:" : "active_median_test"

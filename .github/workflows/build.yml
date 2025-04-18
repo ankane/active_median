@@ -16,9 +16,6 @@ jobs:
           - ruby: 3.2
             gemfile: gemfiles/activerecord71.gemfile
             postgres: true
-          - ruby: 3.1
-            gemfile: gemfiles/activerecord70.gemfile
-            postgres: true
           - ruby: 3.3
             gemfile: gemfiles/mysql2.gemfile
             adapter: mysql2
@@ -31,14 +28,11 @@ jobs:
             gemfile: gemfiles/trilogy.gemfile
             adapter: trilogy
             mysql: true
-          - ruby: 3.3
+          - ruby: 3.4
             gemfile: gemfiles/mongoid9.gemfile
             mongodb: true
-          - ruby: 3.2
+          - ruby: 3.3
             gemfile: gemfiles/mongoid8.gemfile
-            mongodb: true
-          - ruby: 3.1
-            gemfile: gemfiles/mongoid7.gemfile
             mongodb: true
           - ruby: 3.3
             gemfile: gemfiles/sqlite3.gemfile
@@ -47,7 +41,7 @@ jobs:
             gemfile: gemfiles/sqlite3.gemfile
             adapter: sqlite3
             sqlite: true
-          - ruby: 3.1
+          - ruby: 3.2
             gemfile: gemfiles/sqlserver.gemfile
             adapter: sqlserver
             sqlserver: true
