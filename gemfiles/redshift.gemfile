@@ -2,8 +2,8 @@ source "https://rubygems.org"
 
 gemspec path: ".."
 
-gem "activerecord", "~> 6.1.0"
+gem "activerecord", "~> 7.2.0"
 gem "minitest"
-gem "activerecord6-redshift-adapter"
+gem "activerecord7-redshift-adapter-pennylane"
 gem "rake"
 gem "groupdate"
