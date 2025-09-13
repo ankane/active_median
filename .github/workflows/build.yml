@@ -8,6 +8,9 @@ jobs:
       matrix:
         include:
           - ruby: 3.4
+            gemfile: gemfiles/activerecord81.gemfile
+            postgres: true
+          - ruby: 3.4
             gemfile: Gemfile
             postgres: true
           - ruby: 3.3
