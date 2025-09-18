@@ -135,4 +135,43 @@ class PercentileTest < Minitest::Test
     end
     assert_equal "percentile is not between 0 and 1", error.message
   end
+
+  def test_multiple_percentiles
+    [1, 2, 3, 4].each { |n| User.create!(visits_count: n) }
+    result = User.percentiles(:visits_count, 0.25, 0.5, 0.75)
+    assert_equal 3, result.length
+    assert_in_delta 1.75, result[0]
+    assert_in_delta 2.5, result[1]
+    assert_in_delta 3.25, result[2]
+  end
+
+  def test_multiple_percentiles_empty
+    result = User.percentiles(:visits_count, 0.25, 0.5, 0.75)
+    assert_nil result
+  end
+
+  def test_multiple_percentiles_group
+    skip if mongoid?
+
+    [1, 2, 3, 4, 15, 20, 35, 40, 50].each { |n| User.create!(visits_count: n, name: n <= 4 ? "A" : "B") }
+    result = User.group(:name).percentiles(:visits_count, 0.25, 0.75)
+    expected = {"A" => [1.75, 3.25], "B" => [20, 40]}
+    assert_equal expected, result
+  end
+
+  def test_multiple_percentiles_validation
+    [1, 2, 3, 4].each { |n| User.create!(visits_count: n) }
+    error = assert_raises(ArgumentError) do
+      User.percentiles(:visits_count, 0.5, 1.1)
+    end
+    assert_equal "percentile is not between 0 and 1", error.message
+  end
+
+  def test_multiple_percentiles_mixed_validation
+    [1, 2, 3, 4].each { |n| User.create!(visits_count: n) }
+    error = assert_raises(ArgumentError) do
+      User.percentiles(:visits_count, 0.5, "bad")
+    end
+    assert_equal "invalid percentile", error.message
+  end
 end
