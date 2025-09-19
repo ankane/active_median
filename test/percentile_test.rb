@@ -174,4 +174,48 @@ class PercentileTest < Minitest::Test
     end
     assert_equal "invalid percentile", error.message
   end
+
+  def test_array_multiple_percentiles
+    result = [1, 2, 3, 4].percentiles(0.25, 0.5, 0.75)
+    assert_equal 3, result.length
+    assert_in_delta 1.75, result[0]
+    assert_in_delta 2.5, result[1]
+    assert_in_delta 3.25, result[2]
+  end
+
+  def test_array_multiple_percentiles_validation
+    error = assert_raises(ArgumentError) do
+      [1, 2, 3, 4].percentiles(0.5, 1.1)
+    end
+    assert_equal "percentile is not between 0 and 1", error.message
+  end
+
+  def test_array_multiple_percentiles_mixed_validation
+    error = assert_raises(ArgumentError) do
+      [1, 2, 3, 4].percentiles(0.5, "bad")
+    end
+    assert_equal "invalid percentile", error.message
+  end
+
+  def test_array_multiple_percentiles_empty_args
+    error = assert_raises(ArgumentError) do
+      [1, 2, 3, 4].percentile()
+    end
+    assert_equal "wrong number of arguments (given 0, expected at least 1)", error.message
+  end
+
+  def test_array_multiple_percentiles_nil_validation
+    error = assert_raises(ArgumentError) do
+      [1, 2, 3, 4].percentiles(0.5, nil)
+    end
+    assert_equal "invalid percentile", error.message
+  end
+
+  def test_hash_multiple_percentiles
+    result = {a: 1, b: 2, c: 3, d: 4}.percentiles(0.25, 0.5, 0.75) { |k, v| v }
+    assert_equal 3, result.length
+    assert_in_delta 1.75, result[0]
+    assert_in_delta 2.5, result[1]
+    assert_in_delta 3.25, result[2]
+  end
 end

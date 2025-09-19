@@ -63,6 +63,7 @@ Percentile
 
 ```ruby
 [1, 2, 3].percentile(0.95)
+[1, 2, 3].percentiles(0.5, 0.95)
 ```
 
 You can also pass a block
