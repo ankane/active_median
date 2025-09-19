@@ -33,7 +33,7 @@ module ActiveMedian
         end
       end
 
-      column_aliases = percentiles.map.with_index do |p, index|
+      column_aliases = percentiles.map do |p|
         alias_base = percentiles.one? ? "#{operation} #{column.to_s.downcase}" : "#{operation}_#{p.to_s.gsub(".", "_")}_#{column.to_s.downcase}"
 
         column_alias =
