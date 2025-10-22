@@ -2,9 +2,9 @@ source "https://rubygems.org"
 
 gemspec path: ".."
 
-gem "activerecord", "~> 8.0.0"
+gem "rake"
 gem "minitest"
+gem "activerecord", "~> 8.0.0"
 gem "tiny_tds"
 gem "activerecord-sqlserver-adapter"
-gem "rake"
 gem "groupdate"

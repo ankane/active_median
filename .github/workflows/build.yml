@@ -51,7 +51,7 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - if: ${{ matrix.sqlserver }}
         run: sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc

@@ -2,8 +2,8 @@ source "https://rubygems.org"
 
 gemspec path: ".."
 
-gem "activerecord", "~> 8.1.0.beta1"
-gem "minitest"
-gem "pg"
 gem "rake"
+gem "minitest"
+gem "activerecord", "~> 8.1.0.beta1"
+gem "pg"
 gem "groupdate"

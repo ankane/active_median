@@ -2,8 +2,8 @@ source "https://rubygems.org"
 
 gemspec path: ".."
 
-gem "activerecord", "~> 8.0.0"
-gem "minitest"
-gem "trilogy"
 gem "rake"
+gem "minitest"
+gem "activerecord", "~> 8.0.0"
+gem "trilogy"
 gem "groupdate", ">= 6.4"

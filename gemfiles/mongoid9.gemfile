@@ -2,6 +2,6 @@ source "https://rubygems.org"
 
 gemspec path: ".."
 
-gem "mongoid", "~> 9"
-gem "minitest"
 gem "rake"
+gem "minitest"
+gem "mongoid", "~> 9"
