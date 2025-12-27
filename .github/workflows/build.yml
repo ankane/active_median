@@ -7,7 +7,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - ruby: 3.4
+          - ruby: "4.0"
             gemfile: Gemfile
             postgres: true
           - ruby: 3.4
@@ -19,15 +19,15 @@ jobs:
           - ruby: 3.2
             gemfile: gemfiles/activerecord71.gemfile
             postgres: true
-          - ruby: 3.4
+          - ruby: "4.0"
             gemfile: gemfiles/mysql2.gemfile
             adapter: mysql2
             mariadb: true
-          - ruby: 3.4
+          - ruby: "4.0"
             gemfile: gemfiles/mysql2.gemfile
             adapter: mysql2
             mysql: true
-          - ruby: 3.4
+          - ruby: "4.0"
             gemfile: gemfiles/trilogy.gemfile
             adapter: trilogy
             mysql: true
@@ -37,10 +37,10 @@ jobs:
           - ruby: 3.3
             gemfile: gemfiles/mongoid8.gemfile
             mongodb: true
-          - ruby: 3.4
+          - ruby: "4.0"
             gemfile: gemfiles/sqlite3.gemfile
             adapter: sqlite3
-          - ruby: 3.4
+          - ruby: "4.0"
             gemfile: gemfiles/sqlite3.gemfile
             adapter: sqlite3
             sqlite: true
