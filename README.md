@@ -14,6 +14,7 @@ Supports:
 :fire: Uses native functions for blazing performance
 
 [![Build Status](https://github.com/ankane/active_median/actions/workflows/build.yml/badge.svg)](https://github.com/ankane/active_median/actions)
+[![libs.tech recommends](https://libs.tech/project/11859691/badge.svg)](https://libs.tech/project/11859691/active_median)
 
 ## Getting Started
 
