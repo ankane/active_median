@@ -16,9 +16,6 @@ jobs:
           - ruby: 3.3
             gemfile: gemfiles/activerecord72.gemfile
             postgres: true
-          - ruby: 3.2
-            gemfile: gemfiles/activerecord71.gemfile
-            postgres: true
           - ruby: "4.0"
             gemfile: gemfiles/mysql2.gemfile
             adapter: mysql2
