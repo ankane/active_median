@@ -2,7 +2,7 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -48,7 +48,7 @@ jobs:
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - if: ${{ matrix.sqlserver }}
         run: sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc
@@ -96,7 +96,7 @@ jobs:
         with:
           accept-eula: true
       - if: ${{ matrix.sqlserver }}
-        run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -Q 'CREATE DATABASE active_median_test'
+        run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -C -Q 'CREATE DATABASE active_median_test'
 
       - run: bundle exec rake test
         env:
