@@ -45,6 +45,12 @@ Works with grouping, too
 Order.group(:store_id).median(:total)
 ```
 
+And it works with multiple percentiles in a single query
+
+```ruby
+Request.percentiles(:response_time, 0.5, 0.95, 0.99)
+```
+
 ## Arrays and Hashes
 
 Median
@@ -57,6 +63,7 @@ Percentile
 
 ```ruby
 [1, 2, 3].percentile(0.95)
+[1, 2, 3].percentiles(0.5, 0.95)
 ```
 
 You can also pass a block
